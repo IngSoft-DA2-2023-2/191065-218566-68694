@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClothingStore.DataAccess.Interface\ClothingStore.DataAccess.Interface.csproj" />
+    <ProjectReference Include="..\ClothingStore.Models\ClothingStore.Models.csproj" />
+    <ProjectReference Include="..\ClothingStore.Service.Interface\ClothingStore.Service.Interface.csproj" />
+  </ItemGroup>
+
+</Project>
