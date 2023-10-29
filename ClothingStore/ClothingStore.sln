@@ -5,17 +5,19 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore", "ClothingStore\ClothingStore.csproj", "{2434A3B2-6E1E-4370-9237-899592A863C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.DataAccess", "ClothingStore.DataAccess\ClothingStore.DataAccess.csproj", "{1ABFAF2B-9BA3-4182-A979-A7D52BB58FA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.DataAccess", "ClothingStore.DataAccess\ClothingStore.DataAccess.csproj", "{1ABFAF2B-9BA3-4182-A979-A7D52BB58FA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.Domain", "ClothingStore.Domain\ClothingStore.Domain.csproj", "{59989635-30DC-42A7-9285-94B1A5607DFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.Domain", "ClothingStore.Domain\ClothingStore.Domain.csproj", "{59989635-30DC-42A7-9285-94B1A5607DFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.DataAccess.Interface", "ClothingStore.DataAccess.Interface\ClothingStore.DataAccess.Interface.csproj", "{84DD07E9-B3B0-4139-AA16-320D77C4CE1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.DataAccess.Interface", "ClothingStore.DataAccess.Interface\ClothingStore.DataAccess.Interface.csproj", "{84DD07E9-B3B0-4139-AA16-320D77C4CE1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.Service", "ClothingStore.Service\ClothingStore.Service.csproj", "{A2F8B1F7-1BBE-4970-A610-7C13E0720C51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.Service", "ClothingStore.Service\ClothingStore.Service.csproj", "{A2F8B1F7-1BBE-4970-A610-7C13E0720C51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.Service.Interface", "ClothingStore.Service.Interface\ClothingStore.Service.Interface.csproj", "{DA48B21A-6684-45A0-A486-AAE28810D69E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.Service.Interface", "ClothingStore.Service.Interface\ClothingStore.Service.Interface.csproj", "{DA48B21A-6684-45A0-A486-AAE28810D69E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.Models", "ClothingStore.Models\ClothingStore.Models.csproj", "{E25658A7-45B2-4098-B29D-669947096A1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.Models", "ClothingStore.Models\ClothingStore.Models.csproj", "{E25658A7-45B2-4098-B29D-669947096A1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.DataAccess.Test", "ClothingStore.DataAccess.Test\ClothingStore.DataAccess.Test.csproj", "{3AF7C718-F693-4EA8-BFC6-0AAE479F718B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{E25658A7-45B2-4098-B29D-669947096A1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E25658A7-45B2-4098-B29D-669947096A1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E25658A7-45B2-4098-B29D-669947096A1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AF7C718-F693-4EA8-BFC6-0AAE479F718B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AF7C718-F693-4EA8-BFC6-0AAE479F718B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AF7C718-F693-4EA8-BFC6-0AAE479F718B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AF7C718-F693-4EA8-BFC6-0AAE479F718B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
