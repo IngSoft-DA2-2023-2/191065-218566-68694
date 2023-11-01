@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ClothingStore.Service.Interface
 {
-    public interface ICategoryService
+    public interface IPaymentService
     {
-        public List<Category> GetAll();
-        public Category GetById(int id);
-        public Category GetByName(string name);
+        public List<Payment> GetAll();
+        public Payment GetById(int id);
+        public Payment GetByName(string name);
     }
 }

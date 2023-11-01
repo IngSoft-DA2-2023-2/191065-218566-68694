@@ -18,6 +18,8 @@ namespace ClothingStore.DataAccess
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentCategory> PaymentCategories { get; set; }
 
     }
 

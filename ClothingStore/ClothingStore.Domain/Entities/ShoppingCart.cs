@@ -20,6 +20,8 @@ namespace ClothingStore.Domain.Entities
         public Promotion Promotion { get; set; } 
         public int PromotionId { get; set; }        
         public StateOrder StateOrder { get; set; } = StateOrder.Pending;
+        public Payment Payment { get; set; }
+        public int PaymentId { get; set; }
         
         
         public ShoppingCart()

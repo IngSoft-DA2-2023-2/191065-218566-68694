@@ -4,6 +4,7 @@ using ClothingStore.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClothingStore.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231031120057_Payment")]
+    partial class Payment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,48 +74,6 @@ namespace ClothingStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Colors");
-                });
-
-            modelBuilder.Entity("ClothingStore.Domain.Entities.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Discount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PaymentCategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PaymentCategoryId");
-
-                    b.ToTable("Payments");
-                });
-
-            modelBuilder.Entity("ClothingStore.Domain.Entities.PaymentCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentCategory");
                 });
 
             modelBuilder.Entity("ClothingStore.Domain.Entities.Product", b =>
@@ -232,9 +193,6 @@ namespace ClothingStore.Migrations
                     b.Property<double>("Discount")
                         .HasColumnType("float");
 
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PromotionId")
                         .HasColumnType("int");
 
@@ -251,8 +209,6 @@ namespace ClothingStore.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PaymentId");
 
                     b.HasIndex("PromotionId");
 
@@ -331,17 +287,6 @@ namespace ClothingStore.Migrations
                     b.ToTable("RoleUser");
                 });
 
-            modelBuilder.Entity("ClothingStore.Domain.Entities.Payment", b =>
-                {
-                    b.HasOne("ClothingStore.Domain.Entities.PaymentCategory", "PaymentCategory")
-                        .WithMany("Payments")
-                        .HasForeignKey("PaymentCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PaymentCategory");
-                });
-
             modelBuilder.Entity("ClothingStore.Domain.Entities.Product", b =>
                 {
                     b.HasOne("ClothingStore.Domain.Entities.Brand", "Brand")
@@ -374,12 +319,6 @@ namespace ClothingStore.Migrations
 
             modelBuilder.Entity("ClothingStore.Domain.Entities.ShoppingCart", b =>
                 {
-                    b.HasOne("ClothingStore.Domain.Entities.Payment", "Payment")
-                        .WithMany("shoppingCarts")
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ClothingStore.Domain.Entities.Promotion", "Promotion")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("PromotionId")
@@ -391,8 +330,6 @@ namespace ClothingStore.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Payment");
 
                     b.Navigation("Promotion");
 
@@ -452,16 +389,6 @@ namespace ClothingStore.Migrations
             modelBuilder.Entity("ClothingStore.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("ClothingStore.Domain.Entities.Payment", b =>
-                {
-                    b.Navigation("shoppingCarts");
-                });
-
-            modelBuilder.Entity("ClothingStore.Domain.Entities.PaymentCategory", b =>
-                {
-                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("ClothingStore.Domain.Entities.Promotion", b =>
