@@ -64,9 +64,9 @@ namespace ClothingStore.Controllers
         }
 
         [HttpPatch("sales/{shoppingCartId}")]
-        public IActionResult Sale(int shoppingCartId)
+        public IActionResult Sale(int shoppingCartId, [FromBody] int paymentId)
         {
-            var order = shoppingCartService.Sale(shoppingCartId);
+            var order = shoppingCartService.Sale(shoppingCartId, paymentId);
             return Ok(order);
         }
 

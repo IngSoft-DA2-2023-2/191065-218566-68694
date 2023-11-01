@@ -17,7 +17,8 @@ namespace ClothingStore.Models.DTO.ShoppingCartDTO
         public double Total { get; set; } = 0;
         public DateTime CartDate { get; set; } = DateTime.Now;
         public List<ProductInCartDTO> Products { get; set; }
-        public string PromotionApplied { get; set; }
+        public string PromotionApplied { get; set; }               
+        
 
         public ShoppingCartSaleDTO()
         {

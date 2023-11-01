@@ -18,7 +18,7 @@ namespace ClothingStore.Service.Interface
         public void RemoveProductCart(int shoppingCartId, int productId);
         public double GetTotal(int ShoppingCartId);
         public PromotionDiscountDTO RunPromotions(int shoppingCartId);
-        public ShoppingCartSaleDTO Sale(int shoppingCartId);
+        public ShoppingCartSaleDTO Sale(int shoppingCartId, int paymentId);
         public List<ShoppingCart> GetSales();
         public List<ShoppingCartSaleDTO> GetSalesByUserId(int userId);
         public ShoppingCart VerifyStock(ShoppingCart shoppingCart);

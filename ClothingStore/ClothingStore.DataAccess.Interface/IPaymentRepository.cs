@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ClothingStore.DataAccess.Interface
 {
-    public interface ICategoryRepository
+    public interface IPaymentRepository
     {
-        public List<Category> GetAll();
-        public Category GetById(int id);
-        public Category GetByName(string name);        
+        public List<Payment> GetAll();
+        public Payment GetById(int id);
+        public Payment GetByName(string name);
     }
 }

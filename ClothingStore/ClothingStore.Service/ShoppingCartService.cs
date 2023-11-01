@@ -23,13 +23,15 @@ namespace ClothingStore.Service
         private readonly IProductRepository _productRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPromotionRepository _promotionRepository;
+        private readonly IPaymentRepository _paymentRepository;
 
-        public ShoppingCartService(IShoppingCartRepository shoppingCartRepository ,IProductRepository productRepository, IUserRepository userRepository, IPromotionRepository promotionRepository)
+        public ShoppingCartService(IShoppingCartRepository shoppingCartRepository ,IProductRepository productRepository, IUserRepository userRepository, IPromotionRepository promotionRepository, IPaymentRepository paymentRepository)
         {
             _shoppingCartRepository = shoppingCartRepository;
             _productRepository = productRepository;            
             _userRepository = userRepository;   
-            _promotionRepository = promotionRepository; 
+            _promotionRepository = promotionRepository;
+            _paymentRepository = paymentRepository;
         }
         
         public void Create(ShoppingCartRequestDTO shoppingCartRequestDTO)
@@ -40,8 +42,10 @@ namespace ClothingStore.Service
                 throw new ArgumentException($"No existe el usuario.");
             }
             var shoppingCart = new ShoppingCart();
-            var promotionDefault = _promotionRepository.GetByName("Sin Promo"); 
+            var promotionDefault = _promotionRepository.GetByName("Sin Promo");
+            var paymentDefault = _paymentRepository.GetByName("Contado");
             shoppingCart.Promotion = promotionDefault;
+            shoppingCart.Payment = paymentDefault;  
             shoppingCart.User = user;
             
             _shoppingCartRepository.Create(shoppingCart);
@@ -215,9 +219,7 @@ namespace ClothingStore.Service
                 else
                 {
                     return 0;
-                }
-
-                
+                }                
             }
         }
 
@@ -330,7 +332,7 @@ namespace ClothingStore.Service
             }
         }
 
-        public ShoppingCartSaleDTO Sale(int shoppingCartId)
+        public ShoppingCartSaleDTO Sale(int shoppingCartId, int paymentId)
         {
             var shoppingCart = _shoppingCartRepository.GetById(shoppingCartId);
             shoppingCart = VerifyStock(shoppingCart);            
@@ -340,8 +342,14 @@ namespace ClothingStore.Service
             shoppingCart.Discount = promotionDiscount.Discount;
             var promotionApplied = _promotionRepository.GetByName(promotionDiscount.PromotionName);
             shoppingCart.Promotion = promotionApplied;
-            shoppingCart.PromotionId = promotionApplied.Id;
+            shoppingCart.PromotionId = promotionApplied.Id;            
             shoppingCart.Total = shoppingCart.SubTotal - shoppingCart.Discount;
+            var payment = _paymentRepository.GetById(paymentId);
+            var paymentDiscount = shoppingCart.Total * payment.Discount / 100;
+            shoppingCart.Total = shoppingCart.Total - paymentDiscount; 
+            shoppingCart.Discount = shoppingCart.Discount + paymentDiscount;
+            shoppingCart.Payment = payment;
+            shoppingCart.PaymentId = paymentId;
             shoppingCart.CartDate = DateTime.Now;
             shoppingCart.StateOrder = Domain.Enums.StateOrder.Finished;
             
@@ -356,7 +364,8 @@ namespace ClothingStore.Service
             shoppingCartSaleDTO.Email = shoppingCart.User.Email;
             shoppingCartSaleDTO.CartDate = shoppingCart.CartDate;
             shoppingCartSaleDTO.SubTotal = shoppingCart.SubTotal;
-            shoppingCartSaleDTO.Discount = shoppingCart.Discount;
+            shoppingCartSaleDTO.Discount = shoppingCart.Discount;            
+
             shoppingCartSaleDTO.Total = shoppingCart.Total;
             shoppingCartSaleDTO.PromotionApplied = promotionDiscount.PromotionName;
 
