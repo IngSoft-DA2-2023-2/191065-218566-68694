@@ -45,7 +45,7 @@ namespace ClothingStore.Controllers
         }
 
         [HttpPatch("active/{promoId}")]
-        public IActionResult Enable(int promoId)
+        public IActionResult EnablePromotion(int promoId)
         {
             try
             {
