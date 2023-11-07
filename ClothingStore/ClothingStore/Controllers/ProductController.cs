@@ -174,7 +174,7 @@ namespace ClothingStore.Controllers
         }
 
         [HttpPatch("active/{productId}")]
-        public IActionResult Enable(int productId)
+        public IActionResult EnableProductPromotion(int productId)
         {
             try
             {
@@ -190,7 +190,7 @@ namespace ClothingStore.Controllers
         }
 
         [HttpPatch("deactive/{productId}")]
-        public IActionResult DisablePromotion(int productId)
+        public IActionResult DisableProductPromotion(int productId)
         {
             try
             {

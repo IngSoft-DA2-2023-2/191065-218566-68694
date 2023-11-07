@@ -173,8 +173,7 @@ namespace ClothingStore.DataAccess.Test
             Assert.IsTrue(new List<Product>(result).Contains(testProduct));
         }
 
-        //public List<Product> GetBySearch(string? name, Category? category, Brand? brand);        
-        //public void UpdateStock(List<Product> products);
+        //public List<Product> GetBySearch(string? name, Category? category, Brand? brand);                
         //public void EnableDisablePromotion(Product product);
         //public List<Product> GetByPrice(double startPrice, double endPrice);
     }

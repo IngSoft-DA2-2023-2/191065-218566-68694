@@ -196,9 +196,7 @@ namespace ClothingStore.Service
                 return 0;
             }
             else
-            {
-                //Product product1 = shoppingCart.Products.First();
-                //double mayor = product1.Price;
+            {                
                 double mayor = 0;
                 int productPromoAvailableQuantity = 0;
                 foreach (var product in shoppingCart.Products)
@@ -317,10 +315,7 @@ namespace ClothingStore.Service
                 {
                     if (product.Quantity > 2)
                     {
-                        temp = product.Price.First().Price + product.Price.Last().Price;
-                        Console.WriteLine($"{product.Brand} {product.Quantity} {product.Price.First().Price}");
-                        Console.WriteLine($"{product.Brand} {product.Quantity} {product.Price.Last().Price}");
-                        Console.WriteLine("suma de los menores: " + temp);
+                        temp = product.Price.First().Price + product.Price.Last().Price;                        
                         if (temp > discount)
                         {
                             discount = temp;
