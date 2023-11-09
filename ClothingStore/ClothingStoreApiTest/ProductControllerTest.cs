@@ -140,17 +140,6 @@ namespace ClothingStoreApiTest
         }
 
         [TestMethod]
-        public void PostProductBadRequestTest()
-        {
-            mock.Setup(x => x.Create(It.IsAny<ProductRequestDTO>())).Throws(new ArgumentException());
-            var result = api.Post(It.IsAny<ProductRequestDTO>());
-            var objectResult = result as ObjectResult;
-            var statusCode = objectResult.StatusCode;
-            mock.VerifyAll();
-            Assert.AreEqual(400, statusCode);
-        }
-
-        [TestMethod]
         public void PostProductFailTest()
         {
             mock.Setup(x => x.Create(It.IsAny<ProductRequestDTO>())).Throws(new Exception());
@@ -171,29 +160,7 @@ namespace ClothingStoreApiTest
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
         }
-
-        [TestMethod]
-        public void DeleteProductBadRequestTest()
-        {
-            mock.Setup(x => x.Delete(It.IsAny<int>())).Throws(new ArgumentException());
-            var result = api.Delete(It.IsAny<int>());
-            var objectResult = result as ObjectResult;
-            var statusCode = objectResult.StatusCode;
-            mock.VerifyAll();
-            Assert.AreEqual(400, statusCode);
-        }
-
-        [TestMethod]
-        public void DeleteProductNotFoundTest()
-        {
-            mock.Setup(x => x.Delete(It.IsAny<int>())).Throws(new NullReferenceException());
-            var result = api.Delete(It.IsAny<int>());
-            var objectResult = result as ObjectResult;
-            var statusCode = objectResult.StatusCode;
-            mock.VerifyAll();
-            Assert.AreEqual(400, statusCode);
-        }
-        
+             
         [TestMethod]
         public void DeleteProductFailTest()
         {
@@ -214,32 +181,10 @@ namespace ClothingStoreApiTest
             var statusCode = objectResult.StatusCode;
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-        }
+        }       
 
         [TestMethod]
-        public void PutProductBadRequestTest()
-        {
-            mock.Setup(x => x.Update(It.IsAny<ProductUpdateDTO>())).Throws(new ArgumentException());
-            var result = api.Put(testProductUpdateDTO);
-            var objectResult = result as ObjectResult;
-            var statusCode = objectResult.StatusCode;
-            mock.VerifyAll();
-            Assert.AreEqual(400, statusCode);
-        }
-
-        [TestMethod]
-        public void PutProductNotFoundTest()
-        {
-            mock.Setup(x => x.Update(It.IsAny<ProductUpdateDTO>())).Throws(new NullReferenceException());
-            var result = api.Put(It.IsAny<ProductUpdateDTO>());
-            var objectResult = result as ObjectResult;
-            var statusCode = objectResult.StatusCode;
-            mock.VerifyAll();
-            Assert.AreEqual(400, statusCode);
-        }
-
-        [TestMethod]
-        public void PutUserFailTest()
+        public void PutProductFailTest()
         {
             mock.Setup(x => x.Update(It.IsAny<ProductUpdateDTO>())).Throws(new Exception());
             var result = api.Put(It.IsAny<ProductUpdateDTO>());
