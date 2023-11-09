@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.DataAccess.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStore.Service.Test", "ClothingStore.Service.Test\ClothingStore.Service.Test.csproj", "{6B27A893-62E6-4DDD-9FB4-E090CFA5B450}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStoreApiTest", "ClothingStoreApiTest\ClothingStoreApiTest.csproj", "{40470F1F-3FDC-40A8-A792-41FDE39D0D5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClothingStoreApiTest", "ClothingStoreApiTest\ClothingStoreApiTest.csproj", "{40470F1F-3FDC-40A8-A792-41FDE39D0D5D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionManager", "PromotionManager\PromotionManager.csproj", "{EE9B1172-E463-4A47-8CBF-34A2958F3C10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{40470F1F-3FDC-40A8-A792-41FDE39D0D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40470F1F-3FDC-40A8-A792-41FDE39D0D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40470F1F-3FDC-40A8-A792-41FDE39D0D5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE9B1172-E463-4A47-8CBF-34A2958F3C10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE9B1172-E463-4A47-8CBF-34A2958F3C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE9B1172-E463-4A47-8CBF-34A2958F3C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE9B1172-E463-4A47-8CBF-34A2958F3C10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

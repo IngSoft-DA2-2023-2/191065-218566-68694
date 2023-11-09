@@ -4,6 +4,7 @@ using ClothingStore.DataAccess.Repositories;
 using ClothingStore.Service;
 using ClothingStore.Service.Interface;
 using Microsoft.EntityFrameworkCore;
+//using PromotionManager;
 
 var builder = WebApplication.CreateBuilder(args);
 
