@@ -254,7 +254,6 @@ namespace ClothingStore.Service
             }
         }
      
-       
         public double PromoTotalLook(ShoppingCart shoppingCart)
         {
             if (shoppingCart.Products.Count <= 2)
