@@ -68,9 +68,6 @@
     </mat-card>
 </div>
 
-
-
-
 <ng-template #modalConfirmDeleteUser>
     <mat-dialog-content>
         <div class="col-md-12">
@@ -90,6 +87,12 @@
 
 <ng-template #modalFormAddUser>
     <mat-dialog-content>
-        <app-form-user [parentUserManagementComponent]="this"></app-form-user>
+        <app-form-user [operation]="operation_add" [parentUserManagementComponent]="this"></app-form-user>
     </mat-dialog-content>
 </ng-template>
+
+<ng-template #modalFormUserEdit>
+    <mat-dialog-content>
+        <app-form-user [user]="userResponseSelected" [operation]="operation_edit" [parentUserManagementComponent]="this"></app-form-user>
+    </mat-dialog-content>
+</ng-template>>
