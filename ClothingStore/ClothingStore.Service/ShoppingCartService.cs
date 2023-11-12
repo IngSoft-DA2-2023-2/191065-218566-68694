@@ -7,6 +7,7 @@ using ClothingStore.Models.DTO.ShoppingCartDTO;
 using ClothingStore.Service.Interface;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Win32.SafeHandles;
+using PromotionManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace ClothingStore.Service
         private readonly IUserRepository _userRepository;
         private readonly IPromotionRepository _promotionRepository;
         private readonly IPaymentRepository _paymentRepository;
+        private readonly IPromotionManager _promotionManager = new PromotionImp();
 
         public ShoppingCartService(IShoppingCartRepository shoppingCartRepository ,IProductRepository productRepository, IUserRepository userRepository, IPromotionRepository promotionRepository, IPaymentRepository paymentRepository)
         {
@@ -60,6 +62,8 @@ namespace ClothingStore.Service
         public ShoppingCartResponseDTO GetById(int id)
         {
             ShoppingCart shoppingCart = _shoppingCartRepository.GetById(id);
+            _promotionManager.RunPromotions(shoppingCart);
+            var promolist = _promotionManager.GetPromotionList();
             if (shoppingCart == null)
             {
                 throw new ArgumentException($"No se puede obtener el carrito");
@@ -132,6 +136,7 @@ namespace ClothingStore.Service
         public PromotionDiscountDTO RunPromotions(int shoppingCartId)
         {
             var shoppingCart = _shoppingCartRepository.GetById(shoppingCartId);
+            _promotionManager.RunPromotions(shoppingCart);
             var promotions = _promotionRepository.GetAllAvailable();
             double discount = 0;
             double result;

@@ -21,7 +21,10 @@ namespace PromoReflection
         public double TotalWithDiscount(List<Product> products)
         {
             var subtotal = TotalAmount(products);
-            //Calculate discount over products and return total with discounts
+            subtotal = subtotal * 0.6;
+
+            //Calculate discount over products and return total with discount
+            
             return subtotal;
         }
 

@@ -16,5 +16,7 @@ namespace PromotionManager
 
         public void RunPromotions(ShoppingCart sp);
 
+        public List<Tuple<string, string, string>> GetPromotionList();
+
     }
 }
