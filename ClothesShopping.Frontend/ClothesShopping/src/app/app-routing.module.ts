@@ -10,10 +10,10 @@ import { OrdersAdminComponent } from './components/orders-admin/orders-admin.com
 import { ProductsComponent } from './components/products/products.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { UsersComponent } from './components/users/users.component';
-import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProductsAdminComponent } from './components/products-admin/products-admin.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
+import { RegisterUserComponent } from './components/register-user/register-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
@@ -28,9 +28,10 @@ const routes: Routes = [
   { path: 'products-admin', component: ProductsAdminComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: 'users', component: UsersComponent },
-  { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'promotions', component: PromotionsComponent }
+  { path: 'promotions', component: PromotionsComponent },
+  { path: 'register', component: RegisterUserComponent }
+
 ];
 
 @NgModule({

@@ -4,4 +4,5 @@ export const operation_crud = {
   create: 'CREATE',
   update: 'UPDATE',
   delete: 'DELETE',
+  register: 'REGISTER'
 };

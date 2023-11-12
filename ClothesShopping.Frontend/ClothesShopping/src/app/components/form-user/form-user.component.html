@@ -30,7 +30,7 @@
     </mat-form-field>
   </div>
 
-  <div class="grid-field">
+  <div class="grid-field" *ngIf="operation != operation_register">
     <mat-form-field>
       <mat-label>Roles</mat-label>
       <mat-select formControlName="selectedRoles" multiple>
@@ -40,7 +40,7 @@
   </div>
 
   <div class="button-container">
-    <button mat-raised-button color="primary" *ngIf="operation==operation_add" [disabled]="!userForm?.valid"
+    <button mat-raised-button color="primary" *ngIf="operation==operation_add || operation_register" [disabled]="!userForm?.valid"
       (click)="save()">Guardar</button>
     <button mat-raised-button color="primary" *ngIf="operation==operation_edit" [disabled]="!userForm?.valid"
       (click)="update()">Editar</button>

@@ -24,6 +24,8 @@ export class FormUserComponent implements OnInit {
   @Input() operation = '';
   operation_edit = operation_crud.update;
   operation_add = operation_crud.create;
+  operation_register = operation_crud.register;
+  rolesValidator: any;
   constructor(
     private roleService: RoleService,
     public snackBarService: SnackBarService,
@@ -32,11 +34,14 @@ export class FormUserComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder
   ) {
+    if (this.operation !== this.operation_register) {
+      this.rolesValidator = Validators.required;
+    }
     this.userForm = this.fb.group({
       email: [this.user.email || '', [Validators.required, Validators.email]],
       password: [this.user.password || '', Validators.required],
       address: [this.user.address || '', Validators.required],
-      selectedRoles: [this.user.roles || [], Validators.required],
+      selectedRoles: [this.user.roles || [], this.rolesValidator],
     });
   }
 
@@ -46,12 +51,11 @@ export class FormUserComponent implements OnInit {
   }
 
   private initForm(): void {
-    debugger
     this.userForm = this.fb.group({
       email: [this.user.email || '', [Validators.required, Validators.email]],
       password: [this.user.password || '', Validators.required],
       address: [this.user.address || '', Validators.required],
-      selectedRoles: [this.user.roles.map(role => role.id) || [], Validators.required],
+      selectedRoles: [this.user.roles.map(role => role.id) || []],
     });
 
   }
@@ -74,13 +78,17 @@ export class FormUserComponent implements OnInit {
   public save(): void {
     const formValues = this.userForm?.value;
     const selectedRoleIds: number[] = this.userForm.value.selectedRoles; // Obtener los IDs seleccionados del formulario
-    const selectedRoles: RoleResponse[] = this.roles.filter(role => selectedRoleIds.includes(role.id));
-    // Estructurar un objeto UserRequest
-    const userRequest: UserRequest = {
+    let selectedRoles: RoleResponse[] = this.roles.filter(role => selectedRoleIds.includes(role.id));
+    const clientRoles: RoleResponse[] = this.roles.filter(role => role.name === "Client");
+    const roles = this.operation === this.operation_register ?
+      clientRoles.map(role => role.name) :
+      selectedRoles.map(role => role.name);
+
+      const userRequest: UserRequest = {
       email: formValues.email,
       password: formValues.password,
       address: formValues.address,
-      roles: selectedRoles.map((role: RoleResponse) => role.name)
+      roles: roles
     };
     this.userService.add(userRequest).subscribe(
       () => {
