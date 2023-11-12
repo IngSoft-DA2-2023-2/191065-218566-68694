@@ -80,11 +80,11 @@ export class FormUserComponent implements OnInit {
     const selectedRoleIds: number[] = this.userForm.value.selectedRoles; // Obtener los IDs seleccionados del formulario
     let selectedRoles: RoleResponse[] = this.roles.filter(role => selectedRoleIds.includes(role.id));
     const clientRoles: RoleResponse[] = this.roles.filter(role => role.name === "Client");
-    const roles = this.operation === this.operation_register ?
-      clientRoles.map(role => role.name) :
+    const roles = (this.operation === this.operation_register) ||
+      (this.operation !== this.operation_register && selectedRoleIds.length === 0) ? clientRoles.map(role => role.name) :
       selectedRoles.map(role => role.name);
 
-      const userRequest: UserRequest = {
+    const userRequest: UserRequest = {
       email: formValues.email,
       password: formValues.password,
       address: formValues.address,
@@ -96,9 +96,14 @@ export class FormUserComponent implements OnInit {
           'El usuario fue ingresado correctamente.',
           'Aceptar'
         );
-        this.parentUserManagementComponent.getUsers();
-        this.userForm?.reset();
-        this.dialog.closeAll();
+        if(this.operation == this.operation_register) {
+          this.router.navigate(['/products']);
+        }
+        else{
+          this.parentUserManagementComponent.getUsers();
+          this.userForm?.reset();
+          this.dialog.closeAll();
+        }
       },
       (error) => {
         console.log(error);
