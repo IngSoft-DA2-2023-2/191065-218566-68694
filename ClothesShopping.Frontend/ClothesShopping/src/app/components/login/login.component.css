@@ -8,21 +8,28 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-  }
-  
-  .card-container {
+}
+
+.card-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
-  }
-  
-  .form-login {
+}
+
+.form-login {
     padding: 10px;
-  }
-  
-  .button-container {
+}
+
+.button-container {
     display: flex;
     justify-content: end;
-  }
-  
+}
+
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+.mat-toolbar {
+    background-color: black;
+}

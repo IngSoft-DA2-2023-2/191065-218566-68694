@@ -20,9 +20,13 @@
                 </button>
                 <button mat-menu-item routerLink="/administration">
                     <mat-icon>admin_panel_settings</mat-icon>
-                    <span>Adminstracion</span>
+                    <span>Adminstración</span>
                 </button>
-                <button mat-menu-item>
+                <button mat-menu-item *ngIf="!authService.loggedIn()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Iniciar Sessión</span>
+                </button>
+                <button mat-menu-item *ngIf="authService.loggedIn()" (click)="logout()">
                     <mat-icon>exit_to_app</mat-icon>
                     <span>Cerrar Sessión</span>
                 </button>

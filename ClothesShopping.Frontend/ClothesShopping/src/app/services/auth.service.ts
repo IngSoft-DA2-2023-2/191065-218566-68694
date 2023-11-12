@@ -60,7 +60,7 @@ export class AuthService {
     };
     return this.http
       .delete<any>(
-        this.url + 'sessions/logout/' + localStorage.getItem('token'),
+        this.url + 'sessions/' + localStorage.getItem('token'),
         requestOptions
       )
       .pipe(
