@@ -1,0 +1,84 @@
+.title {
+    color: #333333;
+    font-size: 30px;
+    margin-top: 21px;
+
+}
+
+.title-component {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+}
+
+/* product-list.component.css */
+.product-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.search-input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* product.component.css */
+/* product.component.css */
+/* products.component.css */
+.product-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.product-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5%;
+}
+
+.product-box img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin: 10px auto;
+    border-radius: 5%;
+}
+
+
+.mat-grid-list {
+    padding-top: 50px;
+    /* Agrega un padding-top de 50px */
+    position: relative !important;
+    /* Anula la propiedad position: relative */
+    z-index: 1;
+    /* Ajusta el valor de z-index según sea necesario */
+}
+
+.container {
+    height: 100%;
+    margin-top: 20px; /* Ajusta el valor del margen superior según tus necesidades */
+
+    /* O establece una altura específica según tus necesidades */
+}
+
+.scroll-container {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.mat-grid-tile-content {
+    margin-top: 150px !important;
+}
+.product-list .mat-grid-list {
+    display: flex;
+    width: 100%;
+    position: relative;
+}

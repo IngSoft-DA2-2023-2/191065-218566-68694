@@ -1,0 +1,19 @@
+<!-- products.component.html -->
+<mat-grid-list cols="4" rowHeight="300px">
+    <mat-grid-tile
+        *ngFor="let product of products | slice:(currentPage * pageSize):(currentPage * pageSize + pageSize)">
+        <div class="product-box">
+            <img src="https://via.placeholder.com/150" alt="Producto" />
+            <p>{{ product.name }}</p><br>
+            <p>{{ product.price }}</p>
+            <button mat-icon-button (click)="openModalProductDetail(product)">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
+<mat-paginator [length]="products.length" [pageSize]="pageSize" (page)="onPageChange($event)"></mat-paginator>
+
+<ng-template #modalFormProductDetail>
+    <app-product-detail [product]="productSelected"></app-product-detail>
+</ng-template>

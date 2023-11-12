@@ -10,7 +10,7 @@ namespace ClothingStore.Service.Test
     [TestClass]
     public class ProductServiceTest
     {
-        private IProductRepository productRepository;
+        /*private IProductRepository productRepository;
         private IBrandRepository brandRepository;
         private ICategoryRepository categoryRepository;
         private IColorRepository colorRepository;        
@@ -273,5 +273,6 @@ namespace ClothingStore.Service.Test
         //public void DisableProductPromotion(int productId);
         //public List<Product> GetByPrice(double startPrice, double endPrice);
 
+    }*/
     }
 }

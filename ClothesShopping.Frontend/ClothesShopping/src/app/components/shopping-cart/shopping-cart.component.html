@@ -1,0 +1,31 @@
+<mat-toolbar color="black" class="title-component">
+    <span class="title">Carrito de compras</span>
+</mat-toolbar>
+
+<mat-card class="cart-card">
+    <mat-card-title>Carrito de Compras</mat-card-title>
+    <mat-card-content class="product-list">
+        <div class="product-item" *ngFor="let product of cartData.Products">
+            <div class="product-info">
+                <div class="product-details">
+                    <h4>{{ product.Name }}</h4>
+                    <p>Cantidad: </p> <!-- Muestra la cantidad -->
+                    <p>Costo: $</p> <!-- Muestra el costo -->
+                </div>
+            </div>
+            <div class="product-actions">
+                <button mat-icon-button>
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="cart-summary">
+            <p>Subtotal: ${{ cartData.SubTotal.toFixed(2) }}</p>
+            <p>Descuento: ${{ cartData.Discount.toFixed(2) }}</p>
+            <p class="cart-total">Total: ${{ cartData.Total.toFixed(2) }}</p>
+        </div>
+        <button mat-raised-button class="btn-finish-buy" color="primary">Realizar Compra</button>
+    </mat-card-actions>
+</mat-card>

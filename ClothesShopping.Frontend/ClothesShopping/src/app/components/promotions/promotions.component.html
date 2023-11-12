@@ -1,0 +1,53 @@
+<div color="black" class="title-component">
+    <span class="title">Promociones</span>
+</div>
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
+    <mat-card class="table-content">
+        <div align="start">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Filtro de busqueda" />
+            </mat-form-field>
+        </div>
+        <div align="end">
+            <button mat-raised-button color="primary" (click)="openModalAddUser()">
+                Nueva promoción
+            </button>
+        </div>
+        <div class="row">
+            <table *ngIf="promotions.length > 0" mat-table matTableResponsive [dataSource]="promotionsTable" class="top"
+                matSort>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                    <td mat-cell *matCellDef="let promotion">{{ promotion.name }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+                    <td mat-cell *matCellDef="let promotion">{{ promotion.description }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="available">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Habilitada</th>
+                    <td mat-cell *matCellDef="let promotion">
+                        <button mat-button [ngClass]="promotion.available ? 'green-button' : 'red-button'"
+                            (click)="togglePromotionEnablement(promotion)">
+                            {{ promotion.available ? 'Habilitada' : 'No habilitada' }}
+                        </button>
+                    </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator [length]="paginatorLength" [pageSize]="paginationDefault" [pageSizeOptions]="paginationOps"
+                showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card>
+</div>
+
+<ng-template #modalFormAddPromotion>
+    <mat-dialog-content>
+        <app-form-promotion [promotionParentComponent]="this"></app-form-promotion>
+    </mat-dialog-content>
+</ng-template>

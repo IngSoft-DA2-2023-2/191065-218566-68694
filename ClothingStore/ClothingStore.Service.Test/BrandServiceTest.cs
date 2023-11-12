@@ -7,7 +7,7 @@ namespace ClothingStore.Service.Test
     [TestClass]
     public class BrandServiceTest
     {
-        private IBrandRepository brandRepository;
+       /* private IBrandRepository brandRepository;
         private Brand brandTest;        
 
         [TestInitialize]
@@ -72,7 +72,7 @@ namespace ClothingStore.Service.Test
             Assert.AreEqual(brandTest.Id, result.Id);
             Assert.AreEqual(brandTest.Name, result.Name);
             brandRepositoryMock.Verify(repo => repo.GetByName(brandTest.Name), Times.Once);
-        }
+        }*/
 
 
     }

@@ -1,0 +1,22 @@
+.green-button {
+    background-color: green;
+    color: white !important;
+}
+
+.red-button {
+    background-color: red;
+    color: white !important;
+}
+
+.title {
+    color: #333333;
+    font-size: 30px;
+    margin-top: 21px;
+
+}
+
+.title-component {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}

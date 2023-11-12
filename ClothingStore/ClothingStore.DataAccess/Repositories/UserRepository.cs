@@ -28,7 +28,7 @@ namespace ClothingStore.DataAccess.Repositories
 
         public List<User> GetAll()
         {
-            return users.ToList();
+            return users.Include(u => u.Roles).ToList();
         }
 
         public User GetById(int id)

@@ -1,4 +1,5 @@
-﻿using ClothingStore.DataAccess.Interface;
+﻿using AutoMapper;
+using ClothingStore.DataAccess.Interface;
 using ClothingStore.DataAccess.Repositories;
 using ClothingStore.Domain.Entities;
 using ClothingStore.Models.DTO.ProductDTOs;
@@ -13,14 +14,16 @@ using System.Threading.Tasks;
 namespace ClothingStore.Service
 {
     public class UserService : IUserService
-    {                
+    {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
         private readonly IRoleRepository _roleRepository;
 
-        public UserService(IUserRepository userRepository, IRoleRepository roleRepository)
-        {            
+        public UserService(IMapper mapper, IUserRepository userRepository, IRoleRepository roleRepository)
+        {
+            _mapper = mapper;
             _userRepository = userRepository;
-            _roleRepository = roleRepository;   
+            _roleRepository = roleRepository;
         }
 
         public void Create(UserRequestDTO userRequestDTO)
@@ -37,41 +40,45 @@ namespace ClothingStore.Service
                 if (existingRole != null)
                 {
                     user.Roles.Add(existingRole);
-                }                
-            }            
+                }
+            }
             _userRepository.Create(user);
         }
 
-        public List<User> GetAll()
+        public IEnumerable<UserResponseDTO> GetAll()
         {
-            List<User> users = _userRepository.GetAll();            
-            return users;
+            IEnumerable<User> users = _userRepository.GetAll();
+            IEnumerable<UserResponseDTO> userDtos = users.Select(user => _mapper.Map<UserResponseDTO>(user));
+            return userDtos;
         }
 
-        public User GetById(int id)
+        public UserResponseDTO GetById(int id)
         {
             User user = _userRepository.GetById(id);
             if (user == null)
             {
                 throw new ArgumentException($"No se puede obtener el usuario con ID {user.Id} porque no existe.");
-            }            
-            return user;
+            }
+            UserResponseDTO userDto = _mapper.Map<UserResponseDTO>(user);
+            return userDto;
         }
 
-        public User GetByEmail(string email)
+        public UserResponseDTO GetByEmail(string email)
         {
-            User user = _userRepository.GetByEmail(email);            
-            return user;
+            User user = _userRepository.GetByEmail(email);
+            UserResponseDTO userDto = _mapper.Map<UserResponseDTO>(user);
+            return userDto;
         }
 
-        public void Update(User userUpdate)
+        public void Update(UserUpdateDTO userUpdate)
         {
             var existingUser = _userRepository.GetById(userUpdate.Id);
             if (existingUser == null)
             {
                 throw new ArgumentException($"No se puede actualizar el usuario con ID {userUpdate.Id} porque no existe.");
-            }            
-            _userRepository.Update(userUpdate);
+            }
+            var userToUpdate = _mapper.Map<User>(userUpdate);
+            _userRepository.Update(userToUpdate);
         }
 
         public void Delete(int id)
@@ -82,7 +89,7 @@ namespace ClothingStore.Service
                 throw new ArgumentException($"No se puede eliminar el usuario con ID {id} porque no existe.");
             }
             _userRepository.Delete(id);
-        }        
+        }
     }
 
 }

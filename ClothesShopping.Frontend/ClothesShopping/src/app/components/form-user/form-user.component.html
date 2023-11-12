@@ -1,0 +1,33 @@
+<form [formGroup]="userForm" class="grid-form">
+  <div class="grid-field">
+    <mat-form-field>
+      <input matInput formControlName="email" placeholder="Email">
+    </mat-form-field>
+  </div>
+
+  <div class="grid-field">
+    <mat-form-field>
+      <input matInput formControlName="password" type="password" placeholder="Password">
+    </mat-form-field>
+  </div>
+
+  <div class="grid-field">
+    <mat-form-field>
+      <input matInput formControlName="address" placeholder="Address">
+    </mat-form-field>
+  </div>
+
+  <div class="grid-field">
+    <mat-form-field>
+      <mat-label>Roles</mat-label>
+      <mat-select formControlName="selectedRoles" multiple>
+        <mat-option *ngFor="let role of roles" [value]="role">{{ role.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="button-container">
+    <button mat-raised-button color="primary">Guardar</button>
+    <button mat-raised-button color="warn">Cancelar</button>
+  </div>
+</form>

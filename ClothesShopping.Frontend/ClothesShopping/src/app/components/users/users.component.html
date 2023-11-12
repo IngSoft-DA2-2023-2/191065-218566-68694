@@ -1,0 +1,95 @@
+<div color="black" class="title-component">
+    <span class="title">Usuarios</span>
+</div>
+
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
+    <mat-card class="table-content">
+        <div align="start">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Filtro de busqueda" />
+            </mat-form-field>
+        </div>
+        <div align="end">
+            <button mat-raised-button color="primary" (click)="openModalAddUser()">
+                Nuevo usuario
+            </button>
+        </div>
+        <div class="row">
+            <table *ngIf="users.length > 0" mat-table matTableResponsive [dataSource]="usersTable" class="top" matSort>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                    <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="password">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Password</th>
+                    <td mat-cell *matCellDef="let user">{{ user.password }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+                    <td mat-cell *matCellDef="let user">{{ user.address }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="roles">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Roles</th>
+                    <td mat-cell *matCellDef="let user">
+                        <ng-container *ngFor="let role of user.roles; let last = last">
+                            {{ role.name }}
+                            <!-- Agrega una coma si no es el último elemento del array -->
+                            <span *ngIf="!last">, </span>
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
+                    <td mat-cell *matCellDef="let user">
+                        <div class="example-button-container">
+                            <button mat-icon-button color="primary" aria-label="View user"
+                                (click)="openModalEditUser(user)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" aria-label="Delete user"
+                                (click)="openModalConfirmDeleteUser(user)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator [length]="paginatorLength" [pageSize]="paginationDefault" [pageSizeOptions]="paginationOps"
+                showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card>
+</div>
+
+
+
+
+<ng-template #modalConfirmDeleteUser>
+    <mat-dialog-content>
+        <div class="col-md-12">
+            <h5>Desea eliminar el usuario de forma permanente?</h5>
+        </div>
+        <div class="col-md-12">
+            <h5>Usuario: {{ userResponseSelected.email }}</h5>
+        </div>
+        <mat-dialog-actions class="col-md-12" align="end">
+            <button mat-raised-button color="primary" (click)="deleteUser()" mat-dialog-close>
+                Confirmar
+            </button>
+            <button mat-raised-button color="success" mat-dialog-close>Cerrar</button>
+        </mat-dialog-actions>
+    </mat-dialog-content>
+</ng-template>
+
+<ng-template #modalFormAddUser>
+    <mat-dialog-content>
+        <app-form-user></app-form-user>
+    </mat-dialog-content>
+</ng-template>

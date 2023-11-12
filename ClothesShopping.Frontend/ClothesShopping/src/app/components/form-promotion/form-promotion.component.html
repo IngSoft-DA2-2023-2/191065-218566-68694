@@ -1,0 +1,19 @@
+<h2>Registrar promoción</h2>
+<form [formGroup]="promotionForm" class="grid-form">
+    <div class="grid-field">
+        <mat-form-field>
+            <input matInput formControlName="name" placeholder="Nombre">
+        </mat-form-field>
+    </div>
+
+    <div class="grid-field">
+        <mat-form-field>
+            <input matInput formControlName="description" placeholder="Descripción">
+        </mat-form-field>
+    </div>
+
+    <div class="button-container">
+        <button mat-raised-button color="primary" (click)="save()">Guardar</button>
+        <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+    </div>
+</form>

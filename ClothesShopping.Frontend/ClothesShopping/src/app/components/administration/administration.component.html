@@ -1,0 +1,15 @@
+<mat-toolbar color="black" class="title-component">
+    <span class="title">Administracion</span>
+</mat-toolbar>
+<div>
+    <div class="menu-grid">
+        <div *ngFor="let item of menuItems" class="menu-item">
+            <a [routerLink]="item.route" mat-button class="menu-button">
+                <button mat-button class="menu-button">
+                    <mat-icon class="icon-large">{{ item.icon }}</mat-icon>
+                </button>
+            </a>
+            <div class="menu-title">{{ item.title }}</div>
+        </div>
+    </div>
+</div>

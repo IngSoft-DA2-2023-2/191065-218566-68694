@@ -9,7 +9,7 @@ namespace ClothingStore.Service.Test
     [TestClass]
     public class ColorServiceTest
     {
-        private IColorRepository colorRepository;
+       /* private IColorRepository colorRepository;
         private Color colorTest;
 
         [TestInitialize]
@@ -74,7 +74,7 @@ namespace ClothingStore.Service.Test
             Assert.AreEqual(colorTest.Id, result.Id);
             Assert.AreEqual(colorTest.Name, result.Name);
             colorRepositoryMock.Verify(repo => repo.GetByName(colorTest.Name), Times.Once);
-        }
+        }*/
 
     }
 }

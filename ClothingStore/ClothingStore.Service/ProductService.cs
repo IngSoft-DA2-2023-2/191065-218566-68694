@@ -1,4 +1,5 @@
-﻿using ClothingStore.DataAccess.Interface;
+﻿using AutoMapper;
+using ClothingStore.DataAccess.Interface;
 using ClothingStore.DataAccess.Repositories;
 using ClothingStore.Domain.Entities;
 using ClothingStore.Models.DTO.ProductDTOs;
@@ -14,13 +15,16 @@ namespace ClothingStore.Service
         private readonly ICategoryRepository _categoryRepository;
         private readonly IBrandRepository _brandRepository;
         private readonly IColorRepository _colorRepository;
+        private readonly IMapper _mapper;
 
-        public ProductService(IProductRepository productRepository, IColorRepository colorRepository,ICategoryRepository categoryRepository  ,IBrandRepository brandRepository)
+
+        public ProductService(IMapper mapper, IProductRepository productRepository, IColorRepository colorRepository,ICategoryRepository categoryRepository  ,IBrandRepository brandRepository)
         {
             _productRepository = productRepository;
             _colorRepository = colorRepository;
             _categoryRepository = categoryRepository;
             _brandRepository = brandRepository;
+            _mapper = mapper;
         }
 
         public void Create(ProductRequestDTO productRequestDTO)
@@ -89,12 +93,12 @@ namespace ClothingStore.Service
             _productRepository.Delete(id);
         }
 
-        public List<Product> GetAll()
+        public List<ProductResponseDTO> GetAll()
         {
-            List<Product> products = _productRepository.GetAll();
-            return products;
+            var products = _productRepository.GetAll();
+            var productsDTOs = _mapper.Map<List<ProductResponseDTO>>(products);
+            return productsDTOs;
         }
-        
         public List<Product> GetByBrand(string brandName)
         {
             var brand = _brandRepository.GetByName(brandName);

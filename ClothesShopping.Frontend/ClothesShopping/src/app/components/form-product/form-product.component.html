@@ -1,0 +1,59 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="grid-form">
+    <div class="grid-field">
+      <mat-form-field>
+        <input matInput formControlName="name" placeholder="Nombre del producto" required>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <mat-form-field>
+        <input matInput formControlName="price" type="number" placeholder="Precio" required>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <mat-form-field>
+        <mat-select formControlName="brandId" placeholder="Marca">
+          <mat-option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <mat-form-field>
+        <mat-select formControlName="categoryId" placeholder="Categoría">
+          <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <mat-form-field>
+        <mat-select formControlName="colors" placeholder="Colores" multiple>
+          <mat-option *ngFor="let color of colors" [value]="color.id">{{ color.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <mat-form-field>
+        <input matInput formControlName="description" placeholder="Descripción">
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <mat-form-field>
+        <input matInput formControlName="stock" type="number" placeholder="Stock" required>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <mat-checkbox formControlName="promoAvailable">Promo Available</mat-checkbox>
+    </div>
+  
+    <div class="button-container">
+      <button type="submit" mat-raised-button color="primary">Guardar</button>
+      <button type="button" mat-raised-button color="warn">Cancelar</button>
+    </div>
+  </form>
+  

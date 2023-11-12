@@ -1,5 +1,7 @@
-﻿using ClothingStore.DataAccess.Interface;
+﻿using AutoMapper;
+using ClothingStore.DataAccess.Interface;
 using ClothingStore.Domain.Entities;
+using ClothingStore.Models.DTO.ColorDTOs;
 using ClothingStore.Service.Interface;
 using System;
 using System.Collections.Generic;
@@ -12,25 +14,32 @@ namespace ClothingStore.Service
     public class ColorService : IColorService
     {
         private readonly IColorRepository _colorRepository;
+        private readonly IMapper _mapper;
 
-        public ColorService(IColorRepository colorRepository)
-        {            
+        public ColorService(IMapper mapper, IColorRepository colorRepository)
+        {
             _colorRepository = colorRepository;
+            _mapper = mapper;
         }
-        public List<Color> GetAll()
+        public List<ColorResponseDTO> GetAll()
         {
-            List<Color> colors = _colorRepository.GetAll();
-            return colors;
-        }
-
-        public Color GetById(int colorId)
-        {
-            return _colorRepository.GetById(colorId);
+            var colors = _colorRepository.GetAll();
+            var colorsDTOs = _mapper.Map<List<ColorResponseDTO>>(colors);
+            return colorsDTOs;
         }
 
-        public Color GetByName(string name)
+        public ColorResponseDTO GetById(int colorId)
         {
-            return _colorRepository.GetByName(name);
+            var color = _colorRepository.GetById(colorId);
+            return _mapper.Map<ColorResponseDTO>(color);
+
+        }
+
+        public ColorResponseDTO GetByName(string name)
+        {
+            var color = _colorRepository.GetByName(name);
+            return _mapper.Map<ColorResponseDTO>(color);
+
         }
     }
 }

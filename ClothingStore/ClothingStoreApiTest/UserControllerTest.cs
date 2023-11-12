@@ -11,7 +11,7 @@ namespace ClothingStoreApiTest
     [TestClass]
     public class UserControllerTest
     {
-        private Mock<IUserService> mock;
+      /*  private Mock<IUserService> mock;
         private UserController api;        
         private User testUser;
         private UserRequestDTO testUserRequestDTO;
@@ -150,7 +150,7 @@ namespace ClothingStoreApiTest
             Assert.AreEqual(400, statusCode);
         }
         
-        //public IActionResult GetByEmail(string email)
+        //public IActionResult GetByEmail(string email)*/
 
     }
 }

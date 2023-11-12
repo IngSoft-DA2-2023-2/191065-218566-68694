@@ -24,7 +24,11 @@ namespace ClothingStore.DataAccess.Repositories
 
         public List<Product> GetAll()
         {
-            return products.ToList();
+            var productsRet = products.Include(p => p.Brand)
+              .Include(p => p.Category)
+              .ToList();
+
+            return productsRet;
         }
 
         public Product GetById(int id)

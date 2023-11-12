@@ -8,7 +8,7 @@ namespace ClothingStore.Service.Interface
         public void Create(ProductRequestDTO productRequestDTO);
         public void Delete(int id);
         public void Update(ProductUpdateDTO productDto);
-        public List<Product> GetAll();
+        public List<ProductResponseDTO> GetAll();
         public Product GetById(int id);
         public List<Product> GetBySearch(string? name, string? category, string? brand);
         public List<Product> GetByName(string name);

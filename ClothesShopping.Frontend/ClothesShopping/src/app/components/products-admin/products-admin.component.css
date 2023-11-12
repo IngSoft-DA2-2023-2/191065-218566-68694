@@ -1,0 +1,16 @@
+.title {
+    color: #333333;
+    font-size: 30px;
+    margin-top: 21px;
+
+}
+
+.title-component {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+}
+
+.table-products {
+    margin-top: 80px;
+}
