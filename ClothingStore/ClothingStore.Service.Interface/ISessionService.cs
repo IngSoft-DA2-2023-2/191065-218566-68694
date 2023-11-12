@@ -10,9 +10,9 @@ namespace ClothingStore.Service.Interface
 {
     public interface ISessionService
     {
-        public Guid Create (SessionRequestDTO sessionRequestDTO);
+        public SessionResponseDTO Login (SessionRequestDTO sessionRequestDTO);
         public List<Session> GetAll();
-        public Session GetByToken(Guid token);
-        public void Delete(Guid token);
+        public Session GetByToken(string token);
+        public void Logout(string token);
     }
 }

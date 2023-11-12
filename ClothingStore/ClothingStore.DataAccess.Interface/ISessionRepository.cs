@@ -11,8 +11,9 @@ namespace ClothingStore.DataAccess.Interface
     {
         public void Create(Session session);
         public List<Session> GetAll();
-        public Session GetByToken(Guid token);
-        public void Delete(Guid token);
+        public Session GetByToken(string token);
+        public void Delete(string token);
+        public Session GetSessionByEmail(string email);
 
     }
 }

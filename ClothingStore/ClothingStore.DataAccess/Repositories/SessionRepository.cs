@@ -30,17 +30,22 @@ namespace ClothingStore.DataAccess.Repositories
             return sessions.ToList();
         }
 
-        public Session GetByToken(Guid token)
+        public Session GetByToken(string token)
         {
             var session = sessions.Where(s => s.Token == token).Include(s => s.User).FirstOrDefault();
             return session;
         }
 
-        public void Delete(Guid token)
+        public void Delete(string token)
         {
             Session sessionToDelete = sessions.Where(s => s.Token == token).FirstOrDefault();
             sessions.Remove(sessionToDelete);
             _dbContext.SaveChanges();
+        }
+
+        public Session GetSessionByEmail(string email)
+        {
+            return sessions.FirstOrDefault(s => s.User.Email == email);
         }
 
     }

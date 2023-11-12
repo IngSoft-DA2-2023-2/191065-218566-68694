@@ -21,7 +21,7 @@ namespace ClothingStore.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] SessionRequestDTO sessionRequestDTO)
         {            
-            return Ok(sessionService.Create(sessionRequestDTO));
+            return Ok(sessionService.Login(sessionRequestDTO));
         }
 
         [HttpGet]
@@ -31,18 +31,18 @@ namespace ClothingStore.Controllers
         }
 
         [HttpGet("{token}")]
-        public IActionResult GetByToken(Guid token)
+        public IActionResult GetByToken(string token)
         {
             var session = sessionService.GetByToken(token);
             return Ok(session);
         }
 
         [HttpDelete("{token}")]
-        public IActionResult Delete(Guid token)
+        public IActionResult Delete(string token)
         {
             try
             {
-                sessionService.Delete(token);
+                sessionService.Logout(token);
                 return Ok("Usuario logout");
             }
             catch (Exception ex)

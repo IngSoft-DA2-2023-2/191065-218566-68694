@@ -14,37 +14,59 @@ namespace ClothingStore.Service
     {
         private readonly ISessionRepository _sessionRepository;
         private readonly IUserRepository _userRepository;
+        private ITokenService _tokenService;
 
-        public SessionService(ISessionRepository sessionRepository, IUserRepository userRepository)
+        public SessionService(ISessionRepository sessionRepository, IUserRepository userRepository, ITokenService tokenService)
         {
             _sessionRepository = sessionRepository;
             _userRepository = userRepository;
+            _tokenService = tokenService;
         }
 
-        public Guid Create(SessionRequestDTO sessionRequestDTO)
+        public SessionResponseDTO Login(SessionRequestDTO sessionRequestDTO)
+
         {
-            var user = _userRepository.ValidUser(sessionRequestDTO.Email, sessionRequestDTO.Password);
+            var user = _userRepository.GetByEmail(sessionRequestDTO.Email);
+            Session session = new Session();
             if (user == null)
             {
-                throw new ArgumentException("Credenciales no válidas");
+                throw new ArgumentException("El usuario no existe");
+
             }
-            var session = new Session();
+            if (user.Password != sessionRequestDTO.Password)
+            {
+                throw new ArgumentException("Usuario y/o contraseña incorrectos.");
+            }
+            Session existsSession = _sessionRepository.GetSessionByEmail(sessionRequestDTO.Email);
+            var sessionResponseDTO = new SessionResponseDTO();
+
+            if (existsSession != null)
+            {
+                session.Token = existsSession.Token;
+                sessionResponseDTO.Token = existsSession.Token;
+            }
+            else
+            {
+                session.Token = _tokenService.GenerateToken(user);
+                sessionResponseDTO.Token = session.Token;
+            }
             session.User = user;
-            session.UserId = user.Id;
-            _sessionRepository.Create(session);
-            return session.Token;
+             _sessionRepository.Create(session);
+            sessionResponseDTO.Email = session.User.Email;
+            sessionResponseDTO.UserId = session.User.Id;
+            return sessionResponseDTO;
         }
 
         public List<Session> GetAll()
         {
             return _sessionRepository.GetAll();
         }
-        public Session GetByToken(Guid token)
+        public Session GetByToken(string token)
         {
             return _sessionRepository.GetByToken(token);
         }
 
-        public void Delete(Guid token)
+        public void Logout(string token)
         {
             var session = _sessionRepository.GetByToken(token);
             if (session == null)
