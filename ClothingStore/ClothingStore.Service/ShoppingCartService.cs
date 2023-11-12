@@ -63,7 +63,6 @@ namespace ClothingStore.Service
         {
             ShoppingCart shoppingCart = _shoppingCartRepository.GetById(id);
             _promotionManager.RunPromotions(shoppingCart);
-            var promolist = _promotionManager.GetPromotionList();
             if (shoppingCart == null)
             {
                 throw new ArgumentException($"No se puede obtener el carrito");
