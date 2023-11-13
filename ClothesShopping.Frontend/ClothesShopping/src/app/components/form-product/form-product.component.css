@@ -8,6 +8,8 @@
 
 .grid-field {
     grid-column: span 1;
+    display: inline-grid;
+    align-items: center;
     /* Cada campo ocupa una columna */
 }
 
@@ -25,3 +27,4 @@
     margin-left: 8px;
     /* Espacio entre los botones */
 }
+

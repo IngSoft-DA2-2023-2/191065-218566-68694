@@ -34,7 +34,9 @@ export class ProductsAdminComponent {
   ];
   productResponse: ProductResponse = new ProductResponse();
   products: ProductResponse[] = new Array<ProductResponse>();
-
+  categories: CategoryResponse[] = new Array<CategoryResponse>();
+  brands: BrandResponse[] = new Array<BrandResponse>();
+  colors: ColorResponse[] = new Array<CategoryResponse>();
   paginationDefault = pagination_default;
   paginationOps = pagination_options;
   paginatorLength: number = 0;
@@ -47,7 +49,9 @@ export class ProductsAdminComponent {
   modalFormAddProduct!: TemplateRef<any>;
   constructor(
     private productService: ProductService,
-
+    private colorService: ColorService,
+    private brandService: BrandService,
+    private categoryService: CategoryService,
     public snackBarService: SnackBarService,
     public dialog: MatDialog,
     private router: Router
@@ -56,6 +60,9 @@ export class ProductsAdminComponent {
   ngOnInit(): void {
     this.initPagination();
     this.getProducts();
+    this.getBrands();
+    this.getColors();
+    this.getCategories();
 
   }
 
@@ -83,6 +90,47 @@ export class ProductsAdminComponent {
     );
   }
 
+  private getCategories(): void {
+    this.categoryService.getAll().subscribe(
+      (response) => {
+        this.categories = response as CategoryResponse[];
+      },
+      (error) => {
+        this.snackBarService.errorMessage(
+          'Ocurrio un error y no se pudo obtener la lista de categorias.',
+          'Accept'
+        );
+      }
+    );
+  }
+
+  private getColors(): void {
+    this.colorService.getAll().subscribe(
+      (response) => {
+        this.colors = response as ColorResponse[];
+      },
+      (error) => {
+        this.snackBarService.errorMessage(
+          'Ocurrio un error y no se pudo obtener la lista de categorias.',
+          'Accept'
+        );
+      }
+    );
+  }
+
+  private getBrands(): void {
+    this.brandService.getAll().subscribe(
+      (response) => {
+        this.brands = response as BrandResponse[];
+      },
+      (error) => {
+        this.snackBarService.errorMessage(
+          'Ocurrio un error y no se pudo obtener la lista de marcas.',
+          'Accept'
+        );
+      }
+    );
+  }
 
   public openModalAddProduct(): void {
     this.dialog.open(this.modalFormAddProduct);
