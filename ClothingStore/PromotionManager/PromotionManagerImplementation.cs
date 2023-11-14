@@ -176,7 +176,7 @@ namespace PromotionManager
                                                         object[] parametersArray2 = new object[] { products };
                                                         object result = methodInfo.Invoke(classInstance, parametersArray2);
                                                         double resultado = (double)result;
-                                                        if (sp.Discount > resultado)
+                                                        if (resultado > sp.Discount)
                                                         {
                                                             sp.Total = sp.SubTotal - resultado;
                                                             sp.Discount = resultado;
