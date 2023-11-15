@@ -43,7 +43,7 @@ builder.Services.AddScoped<IPromotionService, PromotionService>();
 builder.Services.AddScoped<IPaymentCategoryService, PaymentCategoryService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
-builder.Services.AddTransient<IPromotionManagerService, PromotionManagerService>();
+builder.Services.AddScoped<IPromotionManagerService, PromotionManagerService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

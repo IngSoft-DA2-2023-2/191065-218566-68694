@@ -42,8 +42,9 @@ namespace PromotionManager
         public static List<Tuple<string, string, string>> GetPromotionListMethods()
         {
             List<Tuple<string, string, string>> tuple = new List<Tuple<string, string, string>>();
+            int dllquantity = Directory.GetFiles(dllPath).Length;
 
-            if (!Directory.Exists(dllPath) || Directory.GetFiles(dllPath).Length == 2)
+            if (!Directory.Exists(dllPath) || dllquantity == 0)
             {                
                 return tuple;
             }
