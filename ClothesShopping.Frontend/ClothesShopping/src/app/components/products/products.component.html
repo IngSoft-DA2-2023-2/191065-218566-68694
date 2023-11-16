@@ -1,9 +1,12 @@
 <!-- products.component.html -->
+<mat-form-field class="input-search-product">
+    <input matInput [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()" placeholder="Buscar productos">
+</mat-form-field>
 <mat-grid-list cols="4" rowHeight="300px">
     <mat-grid-tile
-        *ngFor="let product of products | slice:(currentPage * pageSize):(currentPage * pageSize + pageSize)">
+        *ngFor="let product of filteredProducts | slice:(currentPage * pageSize):(currentPage * pageSize + pageSize)">
         <div class="product-box">
-            <img src="https://via.placeholder.com/150" alt="Producto" />
+            <mat-icon>shopping_bag</mat-icon> <!-- Icono de bolsa de compras -->
             <p>{{ product.name }}</p><br>
             <p>{{ product.price }}</p>
             <button mat-icon-button (click)="openModalProductDetail(product)">
@@ -15,12 +18,13 @@
 <mat-paginator [length]="products.length" [pageSize]="pageSize" (page)="onPageChange($event)"></mat-paginator>
 
 <ng-template #modalFormProductDetail>
-    <app-product-detail (requestLoginUser)="getRequestLoginUser($event)" [parentProductsComponent]="this" [product]="productSelected"></app-product-detail>
+    <app-product-detail (requestLoginUser)="getRequestLoginUser($event)" [parentProductsComponent]="this"
+        [product]="productSelected"></app-product-detail>
 </ng-template>
 
 <ng-template #modalRequestLogin>
     <div class="message-request-login">
-    <h2>Error:</h2><br>
-    <p>Para agregar productos al carrito debe estar logueado.</p>
-</div>
+        <h2>Error:</h2><br>
+        <p>Para agregar productos al carrito debe estar logueado.</p>
+    </div>
 </ng-template>

@@ -13,6 +13,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 export class ProductsComponent implements OnInit {
   productSelected: ProductResponse = new ProductResponse();
   products: ProductResponse[] = new Array<ProductResponse>();
+  filteredProducts: ProductResponse[] = new Array<ProductResponse>();
   @ViewChild('modalFormProductDetail', { static: false })
   modalFormProductDetail!: TemplateRef<any>;
   @ViewChild('modalRequestLogin', { static: false })
@@ -32,10 +33,12 @@ export class ProductsComponent implements OnInit {
     this.getProducts()
   }
 
+
   public getProducts(): void {
     this.productService.getAll().subscribe(
       (response) => {
         this.products = response as ProductResponse[];
+        this.filteredProducts = this.products;
       },
       (error) => {
         this.snackBarService.errorMessage(
@@ -56,7 +59,6 @@ export class ProductsComponent implements OnInit {
     this.dialog.open(this.modalFormProductDetail);
   }
   public getRequestLoginUser(message: string): void {
-    debugger
     if (message == 'request-login-user') {
       this.dialog.closeAll();
       this.dialog.open(this.modalRequestLogin);
@@ -65,7 +67,7 @@ export class ProductsComponent implements OnInit {
 
   public applyFilter(): void {
     const filterValue = this.searchTerm.toLowerCase();
-    this.products = this.products.filter((product) => {
+    this.filteredProducts = this.products.filter((product) => {
       return (
         product.name.toLowerCase().includes(filterValue) ||
         product.description.toLowerCase().includes(filterValue) ||

@@ -42,14 +42,7 @@
     padding: 10px;
     text-align: center;
     border-radius: 5%;
-}
-
-.product-box img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin: 10px auto;
-    border-radius: 5%;
+    width: 150px;
 }
 
 
@@ -87,4 +80,10 @@
 
 .message-request-login {
     padding: 16px;
+}
+
+.input-search-product {
+    display: flex;
+    width: 50%;
+    margin-left: 20px;
 }

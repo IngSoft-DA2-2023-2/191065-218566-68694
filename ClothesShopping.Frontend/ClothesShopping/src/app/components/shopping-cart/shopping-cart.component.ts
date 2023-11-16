@@ -128,7 +128,7 @@ export class ShoppingCartComponent implements OnInit {
         );
         this.promoApply = response.promotionApplied;
         this.discount = response.discount;
-        this.totalPrice = response.totalPrice;
+        this.totalPrice = response.total;
         localStorage.removeItem('shoppingCartId')
       },
       (error) => {

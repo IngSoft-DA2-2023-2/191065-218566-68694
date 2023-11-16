@@ -5,12 +5,12 @@
 <h2 *ngIf="cartData.id == 0 " class="existsShoppingCart">No hay productos agregados en el carrito.</h2>
 <div *ngIf="cartData.id != 0"><mat-card class="cart-card" *ngIf="loadCard">
         <mat-card-title>Carrito de Compras</mat-card-title>
-        <mat-card-content class="product-list" *ngIf="shoppingCartId !=''">
+        <mat-card-content class="product-list">
             <div class="product-item" *ngFor="let product of cartData.products">
                 <div class="product-info">
                     <div class="product-details">
                         <h3>{{ product.name }}</h3>
-                        <p>Costo: ${{ product.price }}</p> <!-- Muestra el costo -->
+                        <p>Costo: ${{ product.price }}</p> 
                     </div>
                 </div>
                 <div class="product-actions">
@@ -31,7 +31,7 @@
         <mat-card-actions>
             <div class="cart-summary">
                 <p>Subtotal: ${{ subTotalPrice }}</p>
-                <p>Descuento: ${{ promotionDiscount.discount }}</p>
+                <p>Descuento: ${{ discount }}</p>
                 <p class="cart-total">Total: {{totalPrice}}</p>
                 <p>Promoción aplicada: {{promoApply}}</p>
             </div>

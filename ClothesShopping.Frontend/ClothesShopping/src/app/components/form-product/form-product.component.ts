@@ -25,7 +25,7 @@ export class FormProductComponent implements OnInit {
   product: ProductResponse = new ProductResponse()
   @Input() parentProductsAdminComponent: any;
   promoAvailable: boolean = false;
-
+  operation: string = '';
   constructor(private fb: FormBuilder, private brandService: BrandService,
     private colorService: ColorService,
     private categoryService: CategoryService,
@@ -39,8 +39,8 @@ export class FormProductComponent implements OnInit {
       brand: [this.product.brand || null, Validators.required],
       category: [this.product.category || null, Validators.required],
       stock: [this.product.stock || 0, Validators.min(0)],
-      promoAvailable: [this.product.promoAvailable || true , Validators.required],
-      colors: [this.product.colors || [], Validators.required ]
+      promoAvailable: [this.product.promoAvailable || true, Validators.required],
+      colors: [this.product.colors || [], Validators.required]
     });
     this.promoAvailable = this.product.promoAvailable;
   }
@@ -50,9 +50,8 @@ export class FormProductComponent implements OnInit {
     this.getCategories();
     this.getColors();
     this.initForm();
-
   }
-  
+
   private initForm(): void {
     this.productForm = this.fb.group({
       name: [this.product.name || '', Validators.required],
@@ -61,7 +60,7 @@ export class FormProductComponent implements OnInit {
       brand: [this.product.brand || null, Validators.required],
       category: [this.product.category || null, Validators.required],
       stock: [this.product.stock || 0, Validators.min(0)],
-      promoAvailable: [this.product.promoAvailable || true , Validators.required],
+      promoAvailable: [this.product.promoAvailable || true, Validators.required],
       colors: [this.product.colors.map(color => color.id) || []],
     });
     this.promoAvailable = this.product.promoAvailable;
