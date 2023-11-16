@@ -1,4 +1,5 @@
 ﻿using ClothingStore.Domain.Entities;
+using ClothingStore.Models.DTO.ShoppingCartDTO;
 using ClothingStore.Models.DTO.UserDTOs;
 using System;
 using System.Collections.Generic;

@@ -20,10 +20,12 @@ namespace ClothingStore.DataAccess.Repositories
             shoppingCarts = _dbContext.Set<ShoppingCart>();
         }
 
-        public void Create(ShoppingCart shoppingCart)
+        public int Create(ShoppingCart shoppingCart)
         {
-            shoppingCarts.Add(shoppingCart);
+            var shoppingCartRet = shoppingCarts.Add(shoppingCart);
             _dbContext.SaveChanges();
+
+            return shoppingCartRet.Entity.Id;
         }
 
         public List<ShoppingCart> GetAll()
@@ -60,6 +62,12 @@ namespace ClothingStore.DataAccess.Repositories
                 .Include(sc => sc.Products)
                 .Include(sc => sc.Promotion);
             return sales.ToList();
+        }
+
+        public List<ShoppingCart> GetShoppingCartByUserId(int userId)
+        {
+            var shoppingCartsRet = shoppingCarts.Where(sc => sc.UserId == userId && sc.StateOrder == Domain.Enums.StateOrder.Pending).Include(s=>s.Products);
+            return shoppingCartsRet.ToList();
         }
     }
 }

@@ -74,7 +74,6 @@ export class FormProductComponent implements OnInit {
   onSubmit() {
     const formValues = this.productForm?.value;
     const selectedColorIds: number[] = this.productForm.value.colors; // Obtener los IDs seleccionados del formulario
-debugger
     const productRequest: ProductRequest = {
       name: formValues.name,
       price: formValues.price,

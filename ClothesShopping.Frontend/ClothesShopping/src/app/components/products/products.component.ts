@@ -10,11 +10,13 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent implements OnInit{
-  productSelected:ProductResponse = new ProductResponse();
+export class ProductsComponent implements OnInit {
+  productSelected: ProductResponse = new ProductResponse();
   products: ProductResponse[] = new Array<ProductResponse>();
   @ViewChild('modalFormProductDetail', { static: false })
   modalFormProductDetail!: TemplateRef<any>;
+  @ViewChild('modalRequestLogin', { static: false })
+  modalRequestLogin!: TemplateRef<any>;
   searchTerm: string = '';
 
   pageSize = 8;
@@ -49,9 +51,16 @@ export class ProductsComponent implements OnInit{
     this.currentPage = event.pageIndex;
   }
 
-  public openModalProductDetail(product:ProductResponse): void {
+  public openModalProductDetail(product: ProductResponse): void {
     this.productSelected = product;
     this.dialog.open(this.modalFormProductDetail);
+  }
+  public getRequestLoginUser(message: string): void {
+    debugger
+    if (message == 'request-login-user') {
+      this.dialog.closeAll();
+      this.dialog.open(this.modalRequestLogin);
+    }
   }
 
   public applyFilter(): void {

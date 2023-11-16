@@ -64,7 +64,8 @@
 
 .container {
     height: 100%;
-    margin-top: 20px; /* Ajusta el valor del margen superior según tus necesidades */
+    margin-top: 20px;
+    /* Ajusta el valor del margen superior según tus necesidades */
 
     /* O establece una altura específica según tus necesidades */
 }
@@ -77,8 +78,13 @@
 .mat-grid-tile-content {
     margin-top: 150px !important;
 }
+
 .product-list .mat-grid-list {
     display: flex;
     width: 100%;
     position: relative;
+}
+
+.message-request-login {
+    padding: 16px;
 }

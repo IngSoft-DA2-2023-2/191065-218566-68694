@@ -31,8 +31,7 @@ namespace ClothingStore.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ShoppingCartRequestDTO shoppingCartRequestDTO)
         {
-            shoppingCartService.Create(shoppingCartRequestDTO);
-            return Ok("El carrito ha sido creado correctamente");
+            return Ok(shoppingCartService.Create(shoppingCartRequestDTO));
         }
 
         [HttpPatch("add/{shoppingCartId}")]
@@ -61,6 +60,13 @@ namespace ClothingStore.Controllers
         {
             var discount = shoppingCartService.RunPromotions(shoppingCartId);
             return Ok(discount);
+        }
+
+        [HttpGet("byUserId/{userId}")]
+        public IActionResult GetShoppingCartByUserId(int userId)
+        {
+            var shoppingCarts = shoppingCartService.GetShoppingCartByUserId(userId);
+            return Ok(shoppingCarts);
         }
 
         [HttpPatch("sales/{shoppingCartId}")]

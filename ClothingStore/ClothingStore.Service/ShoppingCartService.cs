@@ -1,9 +1,11 @@
-﻿using ClothingStore.DataAccess.Interface;
+﻿using AutoMapper;
+using ClothingStore.DataAccess.Interface;
 using ClothingStore.DataAccess.Repositories;
 using ClothingStore.Domain.Entities;
 using ClothingStore.Models.DTO.ProductDTOs;
 using ClothingStore.Models.DTO.PromotionDTOs;
 using ClothingStore.Models.DTO.ShoppingCartDTO;
+using ClothingStore.Models.DTO.UserDTOs;
 using ClothingStore.Service.Interface;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Win32.SafeHandles;
@@ -24,17 +26,19 @@ namespace ClothingStore.Service
         private readonly IUserRepository _userRepository;
         private readonly IPromotionRepository _promotionRepository;
         private readonly IPaymentRepository _paymentRepository;
+        private readonly IMapper _mapper;
 
-        public ShoppingCartService(IShoppingCartRepository shoppingCartRepository ,IProductRepository productRepository, IUserRepository userRepository, IPromotionRepository promotionRepository, IPaymentRepository paymentRepository)
+        public ShoppingCartService(IMapper mapper, IShoppingCartRepository shoppingCartRepository ,IProductRepository productRepository, IUserRepository userRepository, IPromotionRepository promotionRepository, IPaymentRepository paymentRepository)
         {
             _shoppingCartRepository = shoppingCartRepository;
             _productRepository = productRepository;            
             _userRepository = userRepository;   
             _promotionRepository = promotionRepository;
             _paymentRepository = paymentRepository;
+            _mapper = mapper;
         }
         
-        public void Create(ShoppingCartRequestDTO shoppingCartRequestDTO)
+        public int Create(ShoppingCartRequestDTO shoppingCartRequestDTO)
         {
             var user = _userRepository.GetByEmail(shoppingCartRequestDTO.Email);
             if (user == null)
@@ -48,7 +52,7 @@ namespace ClothingStore.Service
             shoppingCart.Payment = paymentDefault;  
             shoppingCart.User = user;
             
-            _shoppingCartRepository.Create(shoppingCart);
+            return _shoppingCartRepository.Create(shoppingCart);
         }
 
         public List<ShoppingCart> GetAll()
@@ -56,7 +60,18 @@ namespace ClothingStore.Service
             List<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetAll();
             return shoppingCarts;
         }
-        
+
+        public List<ShoppingCartResponseDTO> GetShoppingCartByUserId(int id)
+        {
+            List<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetShoppingCartByUserId(id);
+            if (shoppingCarts == null)
+            {
+                throw new ArgumentException($"No se puede obtener el carrito");
+            }
+            List<ShoppingCartResponseDTO> shoppingCartDtos = shoppingCarts.Select(shoppingCart => _mapper.Map<ShoppingCartResponseDTO>(shoppingCart)).ToList();
+            return shoppingCartDtos;
+
+        }
         public ShoppingCartResponseDTO GetById(int id)
         {
             ShoppingCart shoppingCart = _shoppingCartRepository.GetById(id);

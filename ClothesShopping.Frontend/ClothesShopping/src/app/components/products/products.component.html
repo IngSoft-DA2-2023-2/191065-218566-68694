@@ -15,5 +15,12 @@
 <mat-paginator [length]="products.length" [pageSize]="pageSize" (page)="onPageChange($event)"></mat-paginator>
 
 <ng-template #modalFormProductDetail>
-    <app-product-detail [product]="productSelected"></app-product-detail>
+    <app-product-detail (requestLoginUser)="getRequestLoginUser($event)" [parentProductsComponent]="this" [product]="productSelected"></app-product-detail>
+</ng-template>
+
+<ng-template #modalRequestLogin>
+    <div class="message-request-login">
+    <h2>Error:</h2><br>
+    <p>Para agregar productos al carrito debe estar logueado.</p>
+</div>
 </ng-template>

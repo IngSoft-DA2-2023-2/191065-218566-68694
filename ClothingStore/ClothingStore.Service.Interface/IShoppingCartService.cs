@@ -11,7 +11,7 @@ namespace ClothingStore.Service.Interface
 {
     public interface IShoppingCartService
     {
-        public void Create(ShoppingCartRequestDTO ShoppingCartRequestDTO);
+        public int Create(ShoppingCartRequestDTO ShoppingCartRequestDTO);
         public List<ShoppingCart> GetAll();        
         public ShoppingCartResponseDTO GetById(int id);
         public void AddProductCart(int shoppingCartId, int productId);
@@ -22,5 +22,6 @@ namespace ClothingStore.Service.Interface
         public List<ShoppingCart> GetSales();
         public List<ShoppingCartSaleDTO> GetSalesByUserId(int userId);
         public ShoppingCart VerifyStock(ShoppingCart shoppingCart);
+       public List<ShoppingCartResponseDTO> GetShoppingCartByUserId(int id);
     }
 }

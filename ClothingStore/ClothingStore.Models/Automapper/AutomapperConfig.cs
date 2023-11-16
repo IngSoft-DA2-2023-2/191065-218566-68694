@@ -4,6 +4,7 @@ using ClothingStore.Models.DTO.BrandDTOs;
 using ClothingStore.Models.DTO.CategoryDTOs;
 using ClothingStore.Models.DTO.ColorDTOs;
 using ClothingStore.Models.DTO.ProductDTOs;
+using ClothingStore.Models.DTO.ShoppingCartDTO;
 using ClothingStore.Models.DTO.UserDTOs;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,15 @@ namespace ClothingStore.Models.Automapper
                 cfg.CreateMap<Color, ColorResponseDTO>().ReverseMap();
                 cfg.CreateMap<Category, CategoryResponseDTO>().ReverseMap();
                 cfg.CreateMap<Product, ProductResponseDTO>().ReverseMap();
-
+                cfg.CreateMap<ShoppingCart, ShoppingCartResponseDTO>()
+                    .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                    .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
+                    .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products.Select(p => new ProductInCartDTO
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        // Otros mapeos de propiedades según sea necesario
+                    })));
             });
 
             return config.CreateMapper();

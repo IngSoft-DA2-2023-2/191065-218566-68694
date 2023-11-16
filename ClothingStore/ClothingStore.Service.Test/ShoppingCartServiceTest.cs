@@ -93,7 +93,7 @@ namespace ClothingStore.Service.Test
             {
                Email = "userTest"
             };
-            var shoppingCartService = new ShoppingCartService(shoppingCartRepositoryMock.Object, productRepositoryMock.Object, userRepositoryMock.Object,promotionRepositoryMock.Object,paymentRepositoryMock.Object);
+            var shoppingCartService = new ShoppingCartService(null,shoppingCartRepositoryMock.Object, productRepositoryMock.Object, userRepositoryMock.Object,promotionRepositoryMock.Object,paymentRepositoryMock.Object);
             shoppingCartService.Create(shoppingCartDto);
             shoppingCartRepositoryMock.Verify(m => m.Create(It.IsAny<ShoppingCart>()), Times.Once);
         }
@@ -124,7 +124,7 @@ namespace ClothingStore.Service.Test
                     PaymentId = 1 
                 }                
             });
-            var shoppingCartService = new ShoppingCartService(shoppingCartRepositoryMock.Object, null, null, null,null);
+            var shoppingCartService = new ShoppingCartService(null,shoppingCartRepositoryMock.Object, null, null, null,null);
             var shoppingCarts = shoppingCartService.GetAll();
             Assert.IsNotNull(shoppingCarts);
             Assert.AreEqual(1, shoppingCarts.Count());
@@ -135,7 +135,7 @@ namespace ClothingStore.Service.Test
         {
             var shoppingCartRepositoryMock = new Mock<IShoppingCartRepository>();
             shoppingCartRepositoryMock.Setup(repo => repo.GetById(shoppingCartTest.Id)).Returns(shoppingCartTest);
-            var shoppingCartService = new ShoppingCartService(shoppingCartRepositoryMock.Object, null, null, null, null);
+            var shoppingCartService = new ShoppingCartService(null,shoppingCartRepositoryMock.Object, null, null, null, null);
             var result = shoppingCartService.GetById(shoppingCartTest.Id);
             Assert.IsNotNull(result);
             Assert.AreEqual(shoppingCartTest.Id, result.Id);            

@@ -29,7 +29,7 @@
       <div class="product-detail-value">{{ product.promoAvailable ? 'Sí' : 'No' }}</div>
     </div>
     <div class="product-detail-buttons">
-        <button mat-raised-button color="primary">Agregar al carrito</button>
+        <button mat-raised-button color="primary" (click)="addProductToCart()">Agregar al carrito</button>
         <button mat-raised-button color="warn">Cerrar</button>
     </div>
 </div>
