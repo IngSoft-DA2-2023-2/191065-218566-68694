@@ -136,6 +136,21 @@ export class ProductsAdminComponent {
     this.dialog.open(this.modalFormAddProduct);
   }
 
+  public deleteProduct(product:ProductResponse) {
+    product.stock = 0;
+    this.productService.updateProduct(product).subscribe(
+      (response) => {
+        this.getProducts();
+      },
+      (error) => {
+        this.snackBarService.errorMessage(
+          'Ocurrio un error y no se pudo obtener la lista de categorias.',
+          'Accept'
+        );
+      }
+    );
+  }
+
   public applyFilter(event: any): void {
     let filterValue = event.target.value;
     filterValue = filterValue.trim();
