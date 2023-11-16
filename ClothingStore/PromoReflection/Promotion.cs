@@ -4,8 +4,8 @@ namespace PromoReflection
 {
     public class Promotion
     {
-        private static string name = "Promo 30 Off";
-        private static string description = "Si tiene más de 2 productos se descuenta el 20%";
+        private static string name = "Promo de muestra";
+        private static string description = "Condicion: Ninguna. Descuento: Ninguno.";
 
         public string GetName() { return name; }
         public string GetDescription() { return description; }
@@ -21,35 +21,6 @@ namespace PromoReflection
         public double TotalWithDiscount(List<Product> products)
         {
             double discount = TotalAmount(products);
-
-            if (products.Count <= 1)
-            {
-                return 0;
-            }
-            else
-            {
-                double mayor = 0;
-                int productPromoAvailableQuantity = 0;
-                foreach (var product in products)
-                {
-                    if (product.PromoAvailable)
-                    {
-                        productPromoAvailableQuantity++;
-                        if (product.Price > mayor)
-                        {
-                            mayor = product.Price;
-                        }
-                    }
-                }
-                if (productPromoAvailableQuantity >= 2)
-                {
-                    return (mayor * 0.3);
-                }
-                else
-                {
-                    return 0;
-                }
-            }
 
             //Calculate here your discount over products and return it
             //The list contains only available products for discount
