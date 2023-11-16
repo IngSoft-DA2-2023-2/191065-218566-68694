@@ -13,6 +13,14 @@
                 Nueva promoción
             </button>
         </div>
+        <div align="end">
+            <button mat-raised-button color="primary" (click)="fileInput.click()">
+                <span>Cargar nueva promocion</span>
+                <input #fileInput type="file" (change)="uploadFile($event)" style="display:none;" />
+            </button>
+              
+        </div>
+        
         <div class="row">
             <table *ngIf="promotions.length > 0" mat-table matTableResponsive [dataSource]="promotionsTable" class="top"
                 matSort>
