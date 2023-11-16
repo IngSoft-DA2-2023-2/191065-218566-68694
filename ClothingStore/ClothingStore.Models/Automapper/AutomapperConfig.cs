@@ -43,7 +43,7 @@ namespace ClothingStore.Models.Automapper
                     {
                         Id = p.Id,
                         Name = p.Name,
-                        // Otros mapeos de propiedades según sea necesario
+                        Price = p.Price,
                     })));
             });
 

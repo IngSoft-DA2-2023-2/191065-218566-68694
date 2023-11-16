@@ -11,6 +11,7 @@ namespace ClothingStore.Models.DTO.ProductDTOs
     public class ProductInCartDTO
     {
         public int Id { get; set; }
-        public string Name { get; set; }        
+        public string Name { get; set; }   
+        public double Price { get; set; }
     }
 }
