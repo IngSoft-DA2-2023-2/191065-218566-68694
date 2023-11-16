@@ -46,7 +46,10 @@ builder.Services.AddScoped<IPaymentCategoryService, PaymentCategoryService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddScoped<IPromotionManagerService, PromotionManagerService>();
+
 builder.Services.AddAutoMapper(typeof(Program));
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
