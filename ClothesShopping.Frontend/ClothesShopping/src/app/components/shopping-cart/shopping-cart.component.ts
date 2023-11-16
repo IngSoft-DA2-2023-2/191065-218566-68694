@@ -19,9 +19,9 @@ export class ShoppingCartComponent {
       Total: 90.0,
       CartDate: new Date(),
       Products: [
-        { Id: 1, Name: 'Product A' },
-        { Id: 2, Name: 'Product B' },
-        { Id: 3, Name: 'Product C' }
+        { id: 1, name: 'Product A', price: 30},
+        { id: 2, name: 'Product B' , price: 30},
+        { id: 3, name: 'Product C', price: 40},
       ]
     };
   }

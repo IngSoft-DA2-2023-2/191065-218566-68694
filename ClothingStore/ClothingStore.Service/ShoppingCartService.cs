@@ -77,6 +77,7 @@ namespace ClothingStore.Service
                 var productInCartDTO = new ProductInCartDTO();
                 productInCartDTO.Id = product.Id;
                 productInCartDTO.Name = product.Name;
+                productInCartDTO.Price = product.Price;
                 shoppingCartResponseDTO.Products.Add(productInCartDTO);
             }
             return shoppingCartResponseDTO;
@@ -369,15 +370,40 @@ namespace ClothingStore.Service
                 var productInCartDTO = new ProductInCartDTO();
                 productInCartDTO.Id = product.Id;
                 productInCartDTO.Name = product.Name;
+                productInCartDTO.Price = product.Price;
                 shoppingCartSaleDTO.Products.Add(productInCartDTO);
             }
             return shoppingCartSaleDTO;
         }
 
-        public List<ShoppingCart> GetSales()
+        public List<ShoppingCartSaleDTO> GetSales()
         {
             List<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetSales();
-            return shoppingCarts;
+            List<ShoppingCartSaleDTO> shoppingCartsSaleDTO = new List<ShoppingCartSaleDTO>();
+            foreach (var shoppingCart in shoppingCarts)
+            {
+                var shoppingCartSaleDTO = new ShoppingCartSaleDTO();
+                shoppingCartSaleDTO.Id = shoppingCart.Id;
+                shoppingCartSaleDTO.UserId = shoppingCart.UserId;
+                shoppingCartSaleDTO.Email = _userRepository.GetById(shoppingCart.UserId).Email;
+                shoppingCartSaleDTO.CartDate = shoppingCart.CartDate;
+                shoppingCartSaleDTO.SubTotal = shoppingCart.SubTotal;
+                shoppingCartSaleDTO.Discount = shoppingCart.Discount;
+                shoppingCartSaleDTO.Total = shoppingCart.Total;
+                shoppingCartSaleDTO.PromotionApplied = _promotionRepository.GetById(shoppingCart.PromotionId).Name;
+                shoppingCartSaleDTO.PaymentApplied = _paymentRepository.GetById(shoppingCart.PaymentId).Name;
+
+                foreach (var product in shoppingCart.Products)
+                {
+                    var productInCartDTO = new ProductInCartDTO();
+                    productInCartDTO.Id = product.Id;
+                    productInCartDTO.Name = product.Name;
+                    productInCartDTO.Price = product.Price;
+                    shoppingCartSaleDTO.Products.Add(productInCartDTO);
+                }
+                shoppingCartsSaleDTO.Add(shoppingCartSaleDTO);
+            }
+            return shoppingCartsSaleDTO;
         }
 
         public List<ShoppingCartSaleDTO> GetSalesByUserId(int userId)
@@ -395,12 +421,14 @@ namespace ClothingStore.Service
                 shoppingCartSaleDTO.Discount = shoppingCart.Discount;
                 shoppingCartSaleDTO.Total = shoppingCart.Total;
                 shoppingCartSaleDTO.PromotionApplied = _promotionRepository.GetById(shoppingCart.PromotionId).Name;
+                shoppingCartSaleDTO.PaymentApplied = _paymentRepository.GetById(shoppingCart.PaymentId).Name;
 
                 foreach (var product in shoppingCart.Products)
                 {
                     var productInCartDTO = new ProductInCartDTO();
                     productInCartDTO.Id = product.Id;
                     productInCartDTO.Name = product.Name;
+                    productInCartDTO.Price = product.Price;
                     shoppingCartSaleDTO.Products.Add(productInCartDTO);
                 }
                 shoppingCartsSaleDTO.Add(shoppingCartSaleDTO);

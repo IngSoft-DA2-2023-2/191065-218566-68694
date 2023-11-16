@@ -19,7 +19,7 @@ namespace ClothingStore.Service.Interface
         public double GetTotal(int ShoppingCartId);
         public PromotionDiscountDTO RunPromotions(int shoppingCartId);
         public ShoppingCartSaleDTO Sale(int shoppingCartId, int paymentId);
-        public List<ShoppingCart> GetSales();
+        public List<ShoppingCartSaleDTO> GetSales();
         public List<ShoppingCartSaleDTO> GetSalesByUserId(int userId);
         public ShoppingCart VerifyStock(ShoppingCart shoppingCart);
     }

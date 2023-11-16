@@ -1,0 +1,47 @@
+<div class="order-details-modal">
+    <h2>Orden número #: {{ order.id }}</h2>
+    <div class="order-detail-row">
+        <div class="order-detail-label">Usuario ID:</div>
+        <div class="order-detail-value">{{ order?.userId }}</div>
+    </div>
+    <div class="order-detail-row">
+        <div class="order-detail-label">Email:</div>
+        <div class="order-detail-value">{{ order?.email }}</div>
+    </div>
+    <div class="order-detail-row">
+        <div class="order-detail-label">Subtotal:</div>
+        <div class="order-detail-value">{{ order?.subTotal}}</div>
+    </div>
+    <div class="order-detail-row">
+        <div class="order-detail-label">Descuento:</div>
+        <div class="order-detail-value">{{ order?.discount }}</div>
+    </div>    
+    <div class="order-detail-row">
+        <div class="order-detail-label">Total:</div>
+        <div class="order-detail-total">{{ order?.total}}</div>
+    </div>
+    <div class="order-detail-row">
+      <div class="order-detail-label">Promocion:</div>
+      <div class="order-detail-value">{{ order?.promotionApplied}}</div>
+    </div>
+    <div class="order-detail-row">
+        <div class="order-detail-label">Forma de Pago:</div>
+        <div class="order-detail-value">{{ order?.paymentApplied}}</div>
+    </div>
+    <div class="order-detail-row">
+        <div class="order-detail-label">Productos:</div>       
+    </div>
+      
+    <div>
+        <ul class="list-products">
+            <li *ngFor="let product of order.products" class="element-product">
+            Producto ID:{{ product.id }}  {{ product.name }} - Precio:{{ product.price }}
+            </li>
+        </ul>
+    </div>
+    
+      
+    <div class="order-detail-buttons">        
+        <button mat-raised-button color="warn" (click)="closeModal()">Cerrar</button>
+    </div>
+</div>
