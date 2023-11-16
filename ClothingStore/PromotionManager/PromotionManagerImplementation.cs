@@ -12,14 +12,13 @@ namespace PromotionManager
                 Directory.CreateDirectory(dllPath);
             }
             string newName = DateTime.Now.ToString("/yyyyddMHHmmss") + ".dll";
-            //File.Copy(pathToFile, dllPath);
             try
             {
                 File.Copy(pathToFile, dllPath + newName);
             }
             catch (Exception e) 
             {
-                //Console.WriteLine(e.ToString());
+
             }
             
         }
@@ -66,7 +65,7 @@ namespace PromotionManager
                                 ParameterInfo[] pi = minfo.GetParameters();
                                 foreach (var param in pi)
                                 {
-                                    if (!minfo.IsStatic && minfo.IsPublic /*&& (mi.Module.ToString() == assembly.GetModules()[0].Name)*/                                        )
+                                    if (!minfo.IsStatic && minfo.IsPublic)
                                     {
                                         if (param.ParameterType.ToString() == "ClothesShopping.Domain.Entities.ShoppingCart" ||
                                             param.ParameterType.ToString() == "List<Product>" ||
@@ -109,94 +108,69 @@ namespace PromotionManager
         }
         public static void RunPromotions(ShoppingCart sp)
         {
-            /*var listpromomethods = GetPromotionListMethods();
-            if (listpromomethods.Count != 0)
-            {*/
-                List<Product> products = GetPromoAvailableProducts(sp);
-                if (products.Count > 0) 
-                { 
-                    ////Console.WriteLine("Hay productos.");
-                    sp.Total = sp.SubTotal;
-                    //sp.AppliedPromotion = "";
-                    //var lm = GetPromotionListMethods();
-                    //foreach (var methodname in lm)
-                    //{
-                        var lplnf = GetPromotionListNamefiles();
-                        foreach (var file in lplnf)
+            List<Product> products = GetPromoAvailableProducts(sp);
+            if (products.Count > 0) 
+            {
+                sp.Total = sp.SubTotal;
+                    var lplnf = GetPromotionListNamefiles();
+                    foreach (var file in lplnf)
+                    {
+                        Assembly assembly = LoadAssembly((string)file);
+                        Type[] types = assembly.GetTypes();
+                        foreach (Type type in types)
                         {
-                            Assembly assembly = LoadAssembly((string)file);
-                            Type[] types = assembly.GetTypes();
-                            foreach (Type type in types)
+                            MemberInfo[] mb = type.GetMembers();
+                            foreach (MemberInfo mi in mb)
                             {
-                                MemberInfo[] mb = type.GetMembers();
-                                foreach (MemberInfo mi in mb)
+                                if (mi.MemberType == MemberTypes.Method)
                                 {
-                                    if (mi.MemberType == MemberTypes.Method)
+                                    var minfo = (MethodInfo)mi;
+                                    ParameterInfo[] pi = minfo.GetParameters();
+                                    foreach (var param in pi)
                                     {
-                                        var minfo = (MethodInfo)mi;
-                                        ParameterInfo[] pi = minfo.GetParameters();
-                                        foreach (var param in pi)
+                                        string moduleceroname = assembly.GetModules()[0].Name;
+                                        string mimodule = mi.Module.ToString();
+                                        if (!minfo.IsStatic && minfo.IsPublic
+                                            )
                                         {
-                                            string moduleceroname = assembly.GetModules()[0].Name;
-                                            string mimodule = mi.Module.ToString();
-                                            if (!minfo.IsStatic && minfo.IsPublic
-                                                /*&& (mimodule == moduleceroname)*/
-                                                )
+                                            if (param.ParameterType.ToString() == "ClothesShopping.Domain.Entities.ShoppingCart")
                                             {
-                                                if (param.ParameterType.ToString() == "ClothesShopping.Domain.Entities.ShoppingCart")
-                                                {
-                                                    object classInstance = Activator.CreateInstance(type, null);
+                                                object classInstance = Activator.CreateInstance(type, null);
+                                                MethodInfo methodInfo = type.GetMethod(mi.Name);
+                                                object[] parametersArray2 = new object[] { sp };
+                                                object result = methodInfo.Invoke(classInstance, parametersArray2);
+                                            }
+                                            if (param.ParameterType.ToString() == "List<Product>"
+                                                || param.ParameterType.ToString() == "System.Collections.Generic.List`1[ClothingStore.Domain.Entities.Product]")
+                                            {
+                                                object classInstance = Activator.CreateInstance(type, null);
+                                                if (mi.Name == "TotalWithDiscount") { 
                                                     MethodInfo methodInfo = type.GetMethod(mi.Name);
-                                                    object[] parametersArray2 = new object[] { sp };
+                                                    object[] parametersArray2 = new object[] { products };
                                                     object result = methodInfo.Invoke(classInstance, parametersArray2);
-                                                    //var tupleAux = Tuple<string, string>(mi.Name, file);
-                                                    //tuple.Add(new Tuple<string, string>(mi.Name, file));
-                                                }
-                                                /*if(mi.Name == "DescuentoCuatroProductos")
-                                                {
-                                                    //Console.WriteLine(param.ParameterType.ToString());
-                                                }*/
-                                                if (param.ParameterType.ToString() == "List<Product>"
-                                                    || param.ParameterType.ToString() == "System.Collections.Generic.List`1[ClothingStore.Domain.Entities.Product]")
-                                                {
-                                                    ////Console.WriteLine("Entre por lista de Productos");
-                                                    object classInstance = Activator.CreateInstance(type, null);
-                                                    if (mi.Name == "TotalWithDiscount") { 
-                                                        MethodInfo methodInfo = type.GetMethod(mi.Name);
-                                                        object[] parametersArray2 = new object[] { products };
-                                                        object result = methodInfo.Invoke(classInstance, parametersArray2);
-                                                        double resultado = (double)result;
-                                                        if (resultado > sp.Discount)
-                                                        {
-                                                            sp.Total = sp.SubTotal - resultado;
-                                                            sp.Discount = resultado;
-                                                            methodInfo = type.GetMethod("GetName");
-                                                            sp.PromotionName = (string)methodInfo.Invoke(classInstance, null);
-                                                            //Console.WriteLine("El carrito con descuentos: ${0}", sp.Total);
-                                                            ////Console.WriteLine("El carrito uso descuento: ${0}", sp.appliedPromotion);
-                                                        }
-                                                }
-                                                    //var tupleAux = Tuple<string, string>(mi.Name, file);
-                                                    //tuple.Add(new Tuple<string, string>(mi.Name, file));
-                                                }
+                                                    double resultado = (double)result;
+                                                    if (resultado > sp.Discount)
+                                                    {
+                                                        sp.Total = sp.SubTotal - resultado;
+                                                        sp.Discount = resultado;
+                                                        methodInfo = type.GetMethod("GetName");
+                                                        sp.PromotionName = (string)methodInfo.Invoke(classInstance, null);
+                                                    }
+                                            }
                                             }
                                         }
                                     }
                                 }
                             }
-
                         }
-                    //}
 
-                }
-                else 
-                { 
-                   //Console.WriteLine("Cantidad de productos del carro {0}", products.Count);
-                }
-                
-            /*}
-            else { //Console.WriteLine("No hay metodos que se adapten."); }*/
+                    }
+
+            }
+            else 
+            { 
+               //Console.WriteLine("Cantidad de productos del carro {0}", products.Count);
+            }
         }
-    }
-    
+    }    
 }
