@@ -1,4 +1,5 @@
 ﻿using ClothingStore.Domain.Entities;
+using ClothingStore.Models.DTO.CategoryDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace ClothingStore.Service.Interface
 {
     public interface ICategoryService
     {
-        public List<Category> GetAll();
-        public Category GetById(int id);
-        public Category GetByName(string name);
+        List<CategoryResponseDTO> GetAll();
+        CategoryResponseDTO GetById(int id);
+        CategoryResponseDTO GetByName(string name);
     }
 }

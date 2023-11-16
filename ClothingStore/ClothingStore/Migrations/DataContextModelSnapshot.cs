@@ -112,7 +112,7 @@ namespace ClothingStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentCategory");
+                    b.ToTable("PaymentCategories");
                 });
 
             modelBuilder.Entity("ClothingStore.Domain.Entities.Product", b =>
@@ -204,8 +204,9 @@ namespace ClothingStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("Token")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -237,6 +238,10 @@ namespace ClothingStore.Migrations
 
                     b.Property<int>("PromotionId")
                         .HasColumnType("int");
+
+                    b.Property<string>("PromotionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StateOrder")
                         .HasColumnType("int");

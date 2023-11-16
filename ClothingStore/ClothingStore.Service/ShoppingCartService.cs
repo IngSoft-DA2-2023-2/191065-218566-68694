@@ -1,12 +1,15 @@
-﻿using ClothingStore.DataAccess.Interface;
+﻿using AutoMapper;
+using ClothingStore.DataAccess.Interface;
 using ClothingStore.DataAccess.Repositories;
 using ClothingStore.Domain.Entities;
 using ClothingStore.Models.DTO.ProductDTOs;
 using ClothingStore.Models.DTO.PromotionDTOs;
 using ClothingStore.Models.DTO.ShoppingCartDTO;
+using ClothingStore.Models.DTO.UserDTOs;
 using ClothingStore.Service.Interface;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Win32.SafeHandles;
+using PromotionManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,16 +28,22 @@ namespace ClothingStore.Service
         private readonly IPromotionRepository _promotionRepository;
         private readonly IPaymentRepository _paymentRepository;
 
-        public ShoppingCartService(IShoppingCartRepository shoppingCartRepository ,IProductRepository productRepository, IUserRepository userRepository, IPromotionRepository promotionRepository, IPaymentRepository paymentRepository)
+        private readonly IMapper _mapper;
+
+        private readonly IPromotionManager _promotionManager = new PromotionImp();
+
+
+        public ShoppingCartService(IMapper mapper, IShoppingCartRepository shoppingCartRepository ,IProductRepository productRepository, IUserRepository userRepository, IPromotionRepository promotionRepository, IPaymentRepository paymentRepository)
         {
             _shoppingCartRepository = shoppingCartRepository;
             _productRepository = productRepository;            
             _userRepository = userRepository;   
             _promotionRepository = promotionRepository;
             _paymentRepository = paymentRepository;
+            _mapper = mapper;
         }
         
-        public void Create(ShoppingCartRequestDTO shoppingCartRequestDTO)
+        public int Create(ShoppingCartRequestDTO shoppingCartRequestDTO)
         {
             var user = _userRepository.GetByEmail(shoppingCartRequestDTO.Email);
             if (user == null)
@@ -48,18 +57,34 @@ namespace ClothingStore.Service
             shoppingCart.Payment = paymentDefault;  
             shoppingCart.User = user;
             
-            _shoppingCartRepository.Create(shoppingCart);
+            return _shoppingCartRepository.Create(shoppingCart);
         }
 
         public List<ShoppingCart> GetAll()
         {
             List<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetAll();
+            foreach(var sc in shoppingCarts)
+            {
+                _promotionManager.RunPromotions(sc);
+            }
             return shoppingCarts;
         }
-        
+
+        public List<ShoppingCartResponseDTO> GetShoppingCartByUserId(int id)
+        {
+            List<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetShoppingCartByUserId(id);
+            if (shoppingCarts == null)
+            {
+                throw new ArgumentException($"No se puede obtener el carrito");
+            }
+            List<ShoppingCartResponseDTO> shoppingCartDtos = shoppingCarts.Select(shoppingCart => _mapper.Map<ShoppingCartResponseDTO>(shoppingCart)).ToList();
+            return shoppingCartDtos;
+
+        }
         public ShoppingCartResponseDTO GetById(int id)
         {
             ShoppingCart shoppingCart = _shoppingCartRepository.GetById(id);
+            _promotionManager.RunPromotions(shoppingCart);
             if (shoppingCart == null)
             {
                 throw new ArgumentException($"No se puede obtener el carrito");
@@ -72,11 +97,13 @@ namespace ClothingStore.Service
             shoppingCartResponseDTO.SubTotal = shoppingCart.SubTotal;
             shoppingCartResponseDTO.Discount = shoppingCart.Discount;
             shoppingCartResponseDTO.Total = shoppingCart.Total;
+            shoppingCartResponseDTO.PromotionName = shoppingCart.PromotionName;
             foreach (var product in shoppingCart.Products)
             {
                 var productInCartDTO = new ProductInCartDTO();
                 productInCartDTO.Id = product.Id;
                 productInCartDTO.Name = product.Name;
+                productInCartDTO.Price = product.Price;
                 shoppingCartResponseDTO.Products.Add(productInCartDTO);
             }
             return shoppingCartResponseDTO;
@@ -132,6 +159,7 @@ namespace ClothingStore.Service
         public PromotionDiscountDTO RunPromotions(int shoppingCartId)
         {
             var shoppingCart = _shoppingCartRepository.GetById(shoppingCartId);
+            _promotionManager.RunPromotions(shoppingCart);
             var promotions = _promotionRepository.GetAllAvailable();
             double discount = 0;
             double result;
@@ -254,7 +282,6 @@ namespace ClothingStore.Service
             }
         }
      
-       
         public double PromoTotalLook(ShoppingCart shoppingCart)
         {
             if (shoppingCart.Products.Count <= 2)
@@ -334,6 +361,7 @@ namespace ClothingStore.Service
 
             shoppingCart.SubTotal = GetTotal(shoppingCartId);
             var promotionDiscount = RunPromotions(shoppingCartId);
+            _promotionManager.RunPromotions(shoppingCart);
             shoppingCart.Discount = promotionDiscount.Discount;
             var promotionApplied = _promotionRepository.GetByName(promotionDiscount.PromotionName);
             shoppingCart.Promotion = promotionApplied;
@@ -369,15 +397,40 @@ namespace ClothingStore.Service
                 var productInCartDTO = new ProductInCartDTO();
                 productInCartDTO.Id = product.Id;
                 productInCartDTO.Name = product.Name;
+                productInCartDTO.Price = product.Price;
                 shoppingCartSaleDTO.Products.Add(productInCartDTO);
             }
             return shoppingCartSaleDTO;
         }
 
-        public List<ShoppingCart> GetSales()
+        public List<ShoppingCartSaleDTO> GetSales()
         {
             List<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetSales();
-            return shoppingCarts;
+            List<ShoppingCartSaleDTO> shoppingCartsSaleDTO = new List<ShoppingCartSaleDTO>();
+            foreach (var shoppingCart in shoppingCarts)
+            {
+                var shoppingCartSaleDTO = new ShoppingCartSaleDTO();
+                shoppingCartSaleDTO.Id = shoppingCart.Id;
+                shoppingCartSaleDTO.UserId = shoppingCart.UserId;
+                shoppingCartSaleDTO.Email = _userRepository.GetById(shoppingCart.UserId).Email;
+                shoppingCartSaleDTO.CartDate = shoppingCart.CartDate;
+                shoppingCartSaleDTO.SubTotal = shoppingCart.SubTotal;
+                shoppingCartSaleDTO.Discount = shoppingCart.Discount;
+                shoppingCartSaleDTO.Total = shoppingCart.Total;
+                shoppingCartSaleDTO.PromotionApplied = _promotionRepository.GetById(shoppingCart.PromotionId).Name;
+                shoppingCartSaleDTO.PaymentApplied = _paymentRepository.GetById(shoppingCart.PaymentId).Name;
+
+                foreach (var product in shoppingCart.Products)
+                {
+                    var productInCartDTO = new ProductInCartDTO();
+                    productInCartDTO.Id = product.Id;
+                    productInCartDTO.Name = product.Name;
+                    productInCartDTO.Price = product.Price;
+                    shoppingCartSaleDTO.Products.Add(productInCartDTO);
+                }
+                shoppingCartsSaleDTO.Add(shoppingCartSaleDTO);
+            }
+            return shoppingCartsSaleDTO;
         }
 
         public List<ShoppingCartSaleDTO> GetSalesByUserId(int userId)
@@ -395,12 +448,14 @@ namespace ClothingStore.Service
                 shoppingCartSaleDTO.Discount = shoppingCart.Discount;
                 shoppingCartSaleDTO.Total = shoppingCart.Total;
                 shoppingCartSaleDTO.PromotionApplied = _promotionRepository.GetById(shoppingCart.PromotionId).Name;
+                shoppingCartSaleDTO.PaymentApplied = _paymentRepository.GetById(shoppingCart.PaymentId).Name;
 
                 foreach (var product in shoppingCart.Products)
                 {
                     var productInCartDTO = new ProductInCartDTO();
                     productInCartDTO.Id = product.Id;
                     productInCartDTO.Name = product.Name;
+                    productInCartDTO.Price = product.Price;
                     shoppingCartSaleDTO.Products.Add(productInCartDTO);
                 }
                 shoppingCartsSaleDTO.Add(shoppingCartSaleDTO);

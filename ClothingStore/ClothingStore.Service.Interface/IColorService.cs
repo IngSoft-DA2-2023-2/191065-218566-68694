@@ -1,4 +1,5 @@
 ﻿using ClothingStore.Domain.Entities;
+using ClothingStore.Models.DTO.ColorDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace ClothingStore.Service.Interface
 {
     public interface IColorService
     {
-        public List<Color> GetAll();
-        public Color GetById(int colorId);
-        public Color GetByName(string name);        
+        public List<ColorResponseDTO> GetAll();
+        public ColorResponseDTO GetById(int colorId);
+        public ColorResponseDTO GetByName(string name);
     }
 }

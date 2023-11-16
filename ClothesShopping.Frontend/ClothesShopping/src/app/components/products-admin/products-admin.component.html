@@ -1,0 +1,94 @@
+<mat-toolbar color="black" class="title-component">
+    <span class="title">Productos administracion</span>
+</mat-toolbar>
+<div class="table-products" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center"
+    fxLayoutGap="25px">
+    <mat-card class="table-content">
+        <div align="start">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Filtro de busqueda" />
+            </mat-form-field>
+        </div>
+        <div align="end">
+            <button mat-raised-button color="primary" (click)="openModalAddProduct()">
+                Nuevo producto
+            </button>
+        </div>
+        <div class="row">
+            <table *ngIf="products.length > 0" mat-table matTableResponsive [dataSource]="productsTable" class="top"
+                matSort>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                    <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+                    <td mat-cell *matCellDef="let product">{{ product.price }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+                    <td mat-cell *matCellDef="let product">{{ product.description }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="brand">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Marca</th>
+                    <td mat-cell *matCellDef="let product">{{ product.brand.name }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoría</th>
+                    <td mat-cell *matCellDef="let product">{{ product.category.name }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="colors">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Colores</th>
+                    <td mat-cell *matCellDef="let product">
+                        <ng-container *ngFor="let color of product.colors; let last = last">
+                            {{ color.name }}
+                            <span *ngIf="!last">, </span>
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="stock">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>
+                    <td mat-cell *matCellDef="let product">{{ product.stock }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="promoAvailable">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Promo habilitada</th>
+                    <td mat-cell *matCellDef="let product"> {{ product.promoAvailable ? 'Tiene promo' : 'No tiene promo'
+                        }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
+                    <td mat-cell *matCellDef="let product">
+                        <div class="example-button-container">
+                            <button mat-icon-button color="primary" aria-label="View product">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" aria-label="Delete product" (click)="deleteProduct(product)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator [length]="paginatorLength" [pageSize]="paginationDefault" [pageSizeOptions]="paginationOps"
+                showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card>
+</div>
+
+<ng-template #modalFormAddProduct>
+    <mat-dialog-content>
+        <app-form-product [parentProductsAdminComponent]="this"></app-form-product>
+    </mat-dialog-content>
+</ng-template>

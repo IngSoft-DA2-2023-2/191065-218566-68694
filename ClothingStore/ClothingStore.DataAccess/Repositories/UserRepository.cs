@@ -28,7 +28,7 @@ namespace ClothingStore.DataAccess.Repositories
 
         public List<User> GetAll()
         {
-            return users.ToList();
+            return users.Include(u => u.Roles).ToList();
         }
 
         public User GetById(int id)
@@ -39,7 +39,7 @@ namespace ClothingStore.DataAccess.Repositories
 
         public User GetByEmail(string email)
         {
-            return users.Where(u => u.Email == email).FirstOrDefault();
+            return users.Where(u => u.Email == email).Include(u => u.Roles).FirstOrDefault();
         }
 
         public void Delete(int id)

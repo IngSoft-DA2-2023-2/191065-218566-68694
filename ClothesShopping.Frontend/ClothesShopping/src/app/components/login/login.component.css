@@ -1,0 +1,35 @@
+.title {
+    color: #333333;
+    font-size: 30px;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.form-login {
+    padding: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: end;
+}
+
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+.mat-toolbar {
+    background-color: black;
+}

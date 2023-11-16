@@ -1,0 +1,9 @@
+.card-register-user {
+    padding: 20px;
+    width: 66%;
+}
+
+.container-register {
+    display: flex;
+    justify-content: center;
+}

@@ -22,8 +22,9 @@ namespace ClothingStore.Domain.Entities
         public StateOrder StateOrder { get; set; } = StateOrder.Pending;
         public Payment Payment { get; set; }
         public int PaymentId { get; set; }
-        
-        
+        public string PromotionName { get; set; }
+
+
         public ShoppingCart()
         {
             Products = new List<Product>();            

@@ -1,4 +1,5 @@
 ﻿using ClothingStore.Domain.Entities;
+using ClothingStore.Models.DTO.BrandDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace ClothingStore.Service.Interface
 {
     public interface IBrandService
     {
-        List<Brand> GetAll();
-        Brand GetById(int id);
-        Brand GetByName(string name);
+        List<BrandResponseDTO> GetAll();
+        BrandResponseDTO GetById(int id);
+        BrandResponseDTO GetByName(string name);
     }
 }

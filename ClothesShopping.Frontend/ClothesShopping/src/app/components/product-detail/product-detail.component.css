@@ -1,0 +1,35 @@
+/* Estilos para el modal de detalles del producto */
+.product-details-modal {
+    padding: 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 400px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-details-modal h2 {
+    font-size: 24px;
+    margin: 0 0 16px;
+}
+
+.product-detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.product-detail-label {
+    flex: 1;
+    font-weight: bold;
+}
+
+.product-detail-value {
+    flex: 2;
+}
+
+.product-detail-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}

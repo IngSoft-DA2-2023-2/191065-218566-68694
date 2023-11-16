@@ -1,0 +1,54 @@
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+    background-color: #333333;
+    color: white;
+}
+
+.menu {
+    background-color: #333333  !important;
+    position: relative;
+    z-index: 9999;
+}
+mat-toolbar {
+    z-index: 9999;
+
+    background-color: #333333; 
+}
+
+/* Estilos del menú lateral */
+.menu {
+    position: fixed; /* Fijo en la página */
+    top: 0;
+    left: 0;
+    width: 300px; /* Ancho del menú */
+    height: 100%; /* Altura completa de la página */
+    background-color: #333333; /* Color de fondo grafito */
+    color: #fff; /* Texto blanco */
+    padding: 20px 0; /* Espacio interior */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sombra lateral */
+    overflow-y: auto; /* Añade scroll si el contenido es largo */
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu li {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .menu a {
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  /* Estilos del contenido principal */
+  .content {
+    margin-left: 300px; /* Deja espacio para el menú lateral */
+    padding: 20px;
+  }
+  
+  

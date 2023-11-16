@@ -1,0 +1,30 @@
+.grid-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Dos columnas con igual ancho */
+    gap: 16px;
+    /* Espacio entre campos */
+}
+
+.grid-field {
+    grid-column: span 1;
+    display: inline-grid;
+    align-items: center;
+    /* Cada campo ocupa una columna */
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    grid-column: span 2;
+    /* Esto hace que los botones ocupen ambas columnas */
+    margin-top: 16px;
+    /* Espacio entre los campos y los botones */
+}
+
+.button-container button {
+    margin-left: 8px;
+    /* Espacio entre los botones */
+}
+

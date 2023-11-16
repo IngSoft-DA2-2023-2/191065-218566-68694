@@ -1,0 +1,35 @@
+<div class="product-details-modal">
+    <h2>{{ product.name }}</h2>
+    <div class="product-detail-row">
+        <div class="product-detail-label">Precio:</div>
+        <div class="product-detail-value">{{ product?.price }}</div>
+    </div>
+    <div class="product-detail-row">
+        <div class="product-detail-label">Descripción:</div>
+        <div class="product-detail-value">{{ product?.description }}</div>
+    </div>
+    <div class="product-detail-row">
+        <div class="product-detail-label">Marca:</div>
+        <div class="product-detail-value">{{ product?.brand?.name }}</div>
+    </div>
+    <div class="product-detail-row">
+        <div class="product-detail-label">Categoría:</div>
+        <div class="product-detail-value">{{ product?.category?.name }}</div>
+    </div>
+    <!--<div class="product-detail-row">
+        <div class="product-detail-label">Colores:</div>
+        <div class="product-detail-value">{{ product?.colors}}</div>
+    </div>-->
+    <div class="product-detail-row">
+        <div class="product-detail-label">Stock:</div>
+        <div class="product-detail-value">{{ product?.stock }}</div>
+    </div>
+    <div class="product-detail-row">
+      <div class="product-detail-label">Habilitada:</div>
+      <div class="product-detail-value">{{ product.promoAvailable ? 'Sí' : 'No' }}</div>
+    </div>
+    <div class="product-detail-buttons">
+        <button mat-raised-button color="primary" (click)="addProductToCart()">Agregar al carrito</button>
+        <button mat-raised-button color="warn">Cerrar</button>
+    </div>
+</div>

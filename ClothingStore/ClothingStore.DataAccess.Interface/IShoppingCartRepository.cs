@@ -9,12 +9,13 @@ namespace ClothingStore.DataAccess.Interface
 {
     public interface IShoppingCartRepository
     {
-        public void Create(ShoppingCart shoppingCart);
+        public int Create(ShoppingCart shoppingCart);
         public List<ShoppingCart> GetAll();        
         public ShoppingCart GetById(int id);
         public void Update(ShoppingCart shoppingCart);
         public List<ShoppingCart> GetSales();
         public List<ShoppingCart> GetSalesByUserId(int userId);
+        public List<ShoppingCart> GetShoppingCartByUserId(int userId);
 
     }
 }

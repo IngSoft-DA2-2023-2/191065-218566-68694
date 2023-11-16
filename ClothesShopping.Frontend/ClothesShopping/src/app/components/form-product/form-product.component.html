@@ -1,0 +1,88 @@
+<h2>Registrar producto</h2>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="grid-form">
+    <div class="grid-field">
+      <label>Nombre</label>
+      <mat-form-field>
+        <input matInput formControlName="name" placeholder="Nombre del producto" required>
+        <mat-error *ngIf="productForm?.get('name')?.hasError('required')">
+          Nombre es requerida
+        </mat-error>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <label>Precio</label>
+      <mat-form-field>
+        <input matInput formControlName="price" type="number" placeholder="Precio" required>
+        <mat-error *ngIf="productForm?.get('price')?.hasError('required')">
+          Precio es requerida
+        </mat-error>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <label>Marca</label>
+      <mat-form-field>
+        <mat-select formControlName="brand" placeholder="Marca">
+          <mat-option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</mat-option>
+          <mat-error *ngIf="productForm?.get('brand')?.hasError('required')">
+            Marca es requerida
+          </mat-error>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <label>Categoría</label>
+      <mat-form-field>
+        <mat-select formControlName="category" placeholder="Categoría">
+          <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
+          <mat-error *ngIf="productForm?.get('category')?.hasError('required')">
+            Categoría es requerida
+          </mat-error>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <label>Colores</label>
+      <mat-form-field>
+        <mat-select formControlName="colors" placeholder="Colores" multiple>
+          <mat-option *ngFor="let color of colors" [value]="color.id">{{ color.name }}</mat-option>
+          <mat-error *ngIf="productForm?.get('colors')?.hasError('required')">
+            Colores es requerida
+          </mat-error>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <label>Descripción</label>
+      <mat-form-field>
+        <input matInput formControlName="description" placeholder="Descripción">
+        <mat-error *ngIf="productForm?.get('description')?.hasError('required')">
+          Descripción es requerida
+        </mat-error>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <label>Stock</label>
+      <mat-form-field>
+        <input matInput formControlName="stock" type="number" placeholder="Stock" required>
+        <mat-error *ngIf="productForm?.get('stock')?.hasError('required')">
+          Stock es requerida
+        </mat-error>
+      </mat-form-field>
+    </div>
+  
+    <div class="grid-field">
+      <mat-checkbox formControlName="promoAvailable" [checked]="promoAvailable" (change)="togglePromoAvailable()">Promo habilitado</mat-checkbox>
+    </div>
+  
+    <div class="button-container">
+      <button type="submit" mat-raised-button color="primary" [disabled]="!productForm?.valid">Guardar</button>
+      <button type="button" mat-raised-button color="warn">Cancelar</button>
+    </div>
+  </form>
+  

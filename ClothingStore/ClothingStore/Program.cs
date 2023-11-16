@@ -1,9 +1,12 @@
+using AutoMapper;
 using ClothingStore.DataAccess;
 using ClothingStore.DataAccess.Interface;
 using ClothingStore.DataAccess.Repositories;
+using ClothingStore.Models.Automapper;
 using ClothingStore.Service;
 using ClothingStore.Service.Interface;
 using Microsoft.EntityFrameworkCore;
+//using PromotionManager;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,12 +44,32 @@ builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
 builder.Services.AddScoped<IPaymentCategoryService, PaymentCategoryService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddScoped<IPromotionManagerService, PromotionManagerService>();
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddMaps(typeof(Program).Assembly);
+});
+var mapper = AutomapperConfig.Configure(mapperConfig.CreateMapper());
+builder.Services.AddSingleton(mapper);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowMyOrigin", builder =>
+    {
+        builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,11 +78,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
+app.UseCors("AllowMyOrigin");
+app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
 app.MapControllers();
-
+app.UseStaticFiles();
+app.UseRouting();
 app.Run();

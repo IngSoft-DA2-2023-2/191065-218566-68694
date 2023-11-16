@@ -1,0 +1,79 @@
+<mat-toolbar color="black" class="title-component">
+    <span class="title">Ordenes administración</span>
+</mat-toolbar>
+
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
+    <mat-card class="table-content margin-title">
+        <div align="start">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Filtro de busqueda" />
+            </mat-form-field>
+        </div> 
+        
+        <div class="row">                         
+            
+            <table *ngIf="orders.length > 0" mat-table matTableResponsive [dataSource]="ordersTable" class="top" matSort>            
+                <ng-container matColumnDef="orderId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Orden ID</th>
+                    <td mat-cell *matCellDef="let order">{{ order.id }}</td>
+                </ng-container>
+                
+                <ng-container matColumnDef="userId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuario ID</th>
+                    <td mat-cell *matCellDef="let order">{{ order.userId }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                    <td mat-cell *matCellDef="let order">{{ order.email }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subTotal">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>SubTotal</th>
+                    <td mat-cell *matCellDef="let order">{{ order.subTotal }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="discount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Descuento</th>
+                    <td mat-cell *matCellDef="let order"> {{ order.discount }} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+                    <td mat-cell *matCellDef="let order"  style="font-weight: bold;" >{{ order.total }}</td>
+                </ng-container>                
+
+                <ng-container matColumnDef="promotion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Promoción</th>
+                    <td mat-cell *matCellDef="let order">{{ order.promotionApplied }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="payment">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Pago</th>
+                    <td mat-cell *matCellDef="let order">{{ order.paymentApplied }}</td>
+                </ng-container>                
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
+                    <td mat-cell *matCellDef="let order">
+                        <div class="example-button-container">
+                            <button mat-icon-button color="primary" aria-label="Ver Orden" (click)="openModalOrderDetail(order)">                                                                                        
+                                <mat-icon>search</mat-icon>
+                            </button>                                                        
+                        </div>
+                    </td>
+                </ng-container>               
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator [length]="paginatorLength" [pageSize]="paginationDefault" [pageSizeOptions]="paginationOps"
+                showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card>
+</div>  
+
+    
+<ng-template #modalFormOrderDetail>
+    <app-order-detail [order]="orderSelected"></app-order-detail>
+</ng-template>

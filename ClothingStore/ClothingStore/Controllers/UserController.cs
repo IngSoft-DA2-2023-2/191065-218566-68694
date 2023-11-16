@@ -46,7 +46,7 @@ namespace ClothingStore.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Put([FromBody] User user)
+        public IActionResult Put([FromBody] UserUpdateDTO user)
         {
             userService.Update(user);
             return Ok("El usuario ha sido actualizado correctamente");

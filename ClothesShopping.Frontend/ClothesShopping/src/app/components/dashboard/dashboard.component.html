@@ -1,0 +1,37 @@
+<mat-toolbar color="primary">
+    <span class="fill-remaining-space">
+        <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger"
+            (mouseover)="menuTrigger.openMenu()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" [overlapTrigger]="false" class="menu" yPosition="above">
+            <span (mouseleave)="menuTrigger.closeMenu()">
+                <button mat-menu-item routerLink="/products">
+                    <mat-icon>store</mat-icon>
+                    <span>Productos</span>
+                </button>
+                <button mat-menu-item routerLink="/shopping-cart">
+                    <mat-icon>shopping_cart</mat-icon>
+                    <span>Carrito de compras</span>
+                </button>
+                <button mat-menu-item routerLink="/orders">
+                    <mat-icon>receipt</mat-icon>
+                    <span>Ordenes de compra</span>
+                </button>
+                <button mat-menu-item routerLink="/administration" *ngIf="rolUser=='Administrator'">
+                    <mat-icon>admin_panel_settings</mat-icon>
+                    <span>Adminstración</span>
+                </button>
+                <button mat-menu-item *ngIf="!authService.loggedIn()" routerLink="/login">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Iniciar Sessión</span>
+                </button>
+                <button mat-menu-item *ngIf="authService.loggedIn()" (click)="logout()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Cerrar Sessión</span>
+                </button>
+            </span>
+        </mat-menu>
+    </span>
+    <span class="fill-remaining-space">ClothesShopping</span>
+</mat-toolbar>
