@@ -8,8 +8,8 @@ import { Component } from '@angular/core';
 export class AdministrationComponent {
   menuItems = [
     { icon: 'shopping_basket', title: 'Productos', route: '/products-admin' },
-    { icon: 'receipt', title: 'Ordenes de compra', route: '/orders' },
+    { icon: 'receipt', title: 'Ordenes de compra', route: '/orders-admin' },
     { icon: 'person', title: 'Usuarios', route: '/users' },
-    { icon: 'local_offer', title: 'Promociones', route: '/promotions' },
+    { icon: 'local_offer', title: 'Promociones', route: '/promotions' },        
   ];
 }
