@@ -18,7 +18,7 @@ export class RoleGuard implements CanActivate {
     }
 
     // Si el usuario no tiene el rol esperado, redirige a una página de acceso no autorizado o la página que desees.
-    this.router.navigate(['/unauthorized']);
+    this.router.navigate(['/products']);
     return false;
   }
 

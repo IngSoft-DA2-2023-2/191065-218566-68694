@@ -73,3 +73,7 @@
 .existsShoppingCart {
     margin: 100px;
 }
+
+.select-payment-type {
+    width: 100%;
+}

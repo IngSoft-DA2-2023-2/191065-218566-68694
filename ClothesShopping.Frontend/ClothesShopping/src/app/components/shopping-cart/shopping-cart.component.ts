@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ProductInCart } from 'src/app/models/product-models/product-in-cart';
 import { ProductResponse } from 'src/app/models/product-models/product-response';
 import { PromotionDiscount } from 'src/app/models/promotion-models/promotion-discount';
+import { PaymentResponse } from 'src/app/models/payment-models/payment-response';
 import { ShoppingCartResponse } from 'src/app/models/shopping-cart-models/shopping-cart-response';
+import { PaymentService } from 'src/app/services/payment.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -21,11 +23,14 @@ export class ShoppingCartComponent implements OnInit {
   totalPrice: number = 0;
   loadCard: boolean = true;
   promotionDiscount: PromotionDiscount = new PromotionDiscount();
-  promoApply:string ='';
-  constructor(private shoppingCartService: ShoppingCartService, private snackBarService: SnackBarService) {
+  promoApply: string = '';
+  paymentSelected: PaymentResponse = new PaymentResponse();
+  paymentResponse: Array<PaymentResponse> = new Array<PaymentResponse>();
+  constructor(private shoppingCartService: ShoppingCartService, private snackBarService: SnackBarService, private paymentService: PaymentService) {
   }
 
   ngOnInit(): void {
+    this.getPayments();
     this.getShoppingCartByUserId();
   }
 
@@ -42,6 +47,20 @@ export class ShoppingCartComponent implements OnInit {
         );
       })
   }
+
+  public getPayments(): void {
+    this.paymentService.getAll().subscribe(
+      (data) => {
+        this.paymentResponse = data;
+      },
+      (error) => {
+        this.snackBarService.errorMessage(
+          'Ocurrio un error y no se pudo obtener los tipos de pago.',
+          'Aceptar'
+        );
+      })
+  }
+
   public getDiscount(): void {
     this.shoppingCartService.getDiscount(this.cartData.id).subscribe(
       (data) => {
@@ -100,7 +119,8 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   public makeSale(): void {
-    this.shoppingCartService.makeSale(this.cartData.id, 5).subscribe(
+
+    this.shoppingCartService.makeSale(this.cartData.id, this.paymentSelected.id).subscribe(
       (response) => {
         this.snackBarService.successMessage(
           'Se ha finalizado la compra',
@@ -108,8 +128,8 @@ export class ShoppingCartComponent implements OnInit {
         );
         this.promoApply = response.promotionApplied;
         this.discount = response.discount;
-        this.totalPrice = response.totalPrice; 
-        localStorage.removeItem('shoppingCartId')       
+        this.totalPrice = response.totalPrice;
+        localStorage.removeItem('shoppingCartId')
       },
       (error) => {
         if (error.status == 200) {

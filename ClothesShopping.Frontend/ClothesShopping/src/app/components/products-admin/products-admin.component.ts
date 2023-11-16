@@ -83,7 +83,7 @@ export class ProductsAdminComponent {
       },
       (error) => {
         this.snackBarService.errorMessage(
-          'Ocurrio un error y no se pudo obtener la lista de usuarios.',
+          'Ocurrio un error y no se pudo obtener la lista de productos.',
           'Accept'
         );
       }
