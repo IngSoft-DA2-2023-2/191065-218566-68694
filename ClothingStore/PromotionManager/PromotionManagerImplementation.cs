@@ -171,7 +171,7 @@ namespace PromotionManager
                                                             sp.Total = sp.SubTotal - resultado;
                                                             sp.Discount = resultado;
                                                             methodInfo = type.GetMethod("GetName");
-                                                            //sp.appliedPromotion = (string)methodInfo.Invoke(classInstance, null);
+                                                            sp.PromotionName = (string)methodInfo.Invoke(classInstance, null);
                                                             //Console.WriteLine("El carrito con descuentos: ${0}", sp.Total);
                                                             ////Console.WriteLine("El carrito uso descuento: ${0}", sp.appliedPromotion);
                                                         }

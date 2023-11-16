@@ -56,6 +56,10 @@ namespace ClothingStore.Service
         public List<ShoppingCart> GetAll()
         {
             List<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetAll();
+            foreach(var sc in shoppingCarts)
+            {
+                _promotionManager.RunPromotions(sc);
+            }
             return shoppingCarts;
         }
         
@@ -75,6 +79,7 @@ namespace ClothingStore.Service
             shoppingCartResponseDTO.SubTotal = shoppingCart.SubTotal;
             shoppingCartResponseDTO.Discount = shoppingCart.Discount;
             shoppingCartResponseDTO.Total = shoppingCart.Total;
+            shoppingCartResponseDTO.PromotionName = shoppingCart.PromotionName;
             foreach (var product in shoppingCart.Products)
             {
                 var productInCartDTO = new ProductInCartDTO();
@@ -337,6 +342,7 @@ namespace ClothingStore.Service
 
             shoppingCart.SubTotal = GetTotal(shoppingCartId);
             var promotionDiscount = RunPromotions(shoppingCartId);
+            _promotionManager.RunPromotions(shoppingCart);
             shoppingCart.Discount = promotionDiscount.Discount;
             var promotionApplied = _promotionRepository.GetByName(promotionDiscount.PromotionName);
             shoppingCart.Promotion = promotionApplied;
