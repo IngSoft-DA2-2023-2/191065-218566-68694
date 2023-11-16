@@ -25,6 +25,7 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
 import { FormPromotionComponent } from './components/form-promotion/form-promotion.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { RegisterUserComponent } from './components/register-user/register-user.
     FormPromotionComponent,
     ProductDetailComponent,
     RegisterUserComponent,
+    OrderDetailComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,12 @@
 
 export class ProductInCart {
-    Id: number;
-    Name: string;
+    id: number;
+    name: string;
+    price: number;
 
     constructor() {
-        this.Id = 0;
-        this.Name = '';
+        this.id = 0;
+        this.name = '';
+        this.price = 0;
     }
 }

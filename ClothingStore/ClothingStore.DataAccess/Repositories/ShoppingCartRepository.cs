@@ -52,7 +52,9 @@ namespace ClothingStore.DataAccess.Repositories
 
         public List<ShoppingCart> GetSales()
         {
-            var sales = shoppingCarts.Where(sc => sc.StateOrder == Domain.Enums.StateOrder.Finished);
+            var sales = shoppingCarts.Where(sc => sc.StateOrder == Domain.Enums.StateOrder.Finished)
+                .Include(sc => sc.Products)
+                .Include(sc => sc.Promotion);
             return sales.ToList();
         }
 
