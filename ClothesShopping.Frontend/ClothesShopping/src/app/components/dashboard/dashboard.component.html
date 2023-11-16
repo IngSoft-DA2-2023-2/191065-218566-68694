@@ -18,7 +18,7 @@
                     <mat-icon>receipt</mat-icon>
                     <span>Ordenes de compra</span>
                 </button>
-                <button mat-menu-item routerLink="/administration">
+                <button mat-menu-item routerLink="/administration" *ngIf="rolUser=='Administrator'">
                     <mat-icon>admin_panel_settings</mat-icon>
                     <span>Adminstración</span>
                 </button>
@@ -35,13 +35,3 @@
     </span>
     <span class="fill-remaining-space">ClothesShopping</span>
 </mat-toolbar>
-<!--<div class="menu">
-    <ul>
-      <li><a href="#">Inicio</a></li>
-      <li><a href="#">Productos</a></li>
-      <li><a href="#">Órdenes</a></li>
-      <li><a href="#">Administración</a></li>
-    </ul>
-  </div>
-  <div class="content">
-  </div>-->

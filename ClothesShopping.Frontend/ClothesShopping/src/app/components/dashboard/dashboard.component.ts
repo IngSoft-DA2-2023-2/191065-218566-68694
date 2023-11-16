@@ -9,6 +9,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+  rolUser = localStorage.getItem('userRol');
   menuItems = [
     { icon: 'shopping_basket', title: 'Productos', route: '' },
     { icon: 'receipt', title: 'Ordenes de compra', route: '' },
