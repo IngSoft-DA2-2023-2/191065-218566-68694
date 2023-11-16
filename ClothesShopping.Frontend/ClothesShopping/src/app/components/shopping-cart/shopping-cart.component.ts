@@ -119,7 +119,6 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   public makeSale(): void {
-
     this.shoppingCartService.makeSale(this.cartData.id, this.paymentSelected.id).subscribe(
       (response) => {
         this.snackBarService.successMessage(
