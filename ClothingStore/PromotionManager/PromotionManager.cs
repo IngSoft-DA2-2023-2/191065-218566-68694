@@ -21,5 +21,10 @@ namespace PromotionManager
         {
             PromotionManagerImplementation.RunPromotions(sp);
         }
+
+        public List<Tuple<string, string, string>> GetPromotionList()
+        {
+            return PromotionManagerImplementation.GetPromotionListMethods();
+        }
     }
 }

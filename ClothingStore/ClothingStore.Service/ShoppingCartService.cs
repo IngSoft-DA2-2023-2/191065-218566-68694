@@ -9,6 +9,7 @@ using ClothingStore.Models.DTO.UserDTOs;
 using ClothingStore.Service.Interface;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Win32.SafeHandles;
+using PromotionManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,11 @@ namespace ClothingStore.Service
         private readonly IUserRepository _userRepository;
         private readonly IPromotionRepository _promotionRepository;
         private readonly IPaymentRepository _paymentRepository;
+
         private readonly IMapper _mapper;
+
+        private readonly IPromotionManager _promotionManager = new PromotionImp();
+
 
         public ShoppingCartService(IMapper mapper, IShoppingCartRepository shoppingCartRepository ,IProductRepository productRepository, IUserRepository userRepository, IPromotionRepository promotionRepository, IPaymentRepository paymentRepository)
         {
@@ -58,6 +63,10 @@ namespace ClothingStore.Service
         public List<ShoppingCart> GetAll()
         {
             List<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetAll();
+            foreach(var sc in shoppingCarts)
+            {
+                _promotionManager.RunPromotions(sc);
+            }
             return shoppingCarts;
         }
 
@@ -75,6 +84,7 @@ namespace ClothingStore.Service
         public ShoppingCartResponseDTO GetById(int id)
         {
             ShoppingCart shoppingCart = _shoppingCartRepository.GetById(id);
+            _promotionManager.RunPromotions(shoppingCart);
             if (shoppingCart == null)
             {
                 throw new ArgumentException($"No se puede obtener el carrito");
@@ -87,6 +97,7 @@ namespace ClothingStore.Service
             shoppingCartResponseDTO.SubTotal = shoppingCart.SubTotal;
             shoppingCartResponseDTO.Discount = shoppingCart.Discount;
             shoppingCartResponseDTO.Total = shoppingCart.Total;
+            shoppingCartResponseDTO.PromotionName = shoppingCart.PromotionName;
             foreach (var product in shoppingCart.Products)
             {
                 var productInCartDTO = new ProductInCartDTO();
@@ -148,6 +159,7 @@ namespace ClothingStore.Service
         public PromotionDiscountDTO RunPromotions(int shoppingCartId)
         {
             var shoppingCart = _shoppingCartRepository.GetById(shoppingCartId);
+            _promotionManager.RunPromotions(shoppingCart);
             var promotions = _promotionRepository.GetAllAvailable();
             double discount = 0;
             double result;
@@ -270,7 +282,6 @@ namespace ClothingStore.Service
             }
         }
      
-       
         public double PromoTotalLook(ShoppingCart shoppingCart)
         {
             if (shoppingCart.Products.Count <= 2)
@@ -350,6 +361,7 @@ namespace ClothingStore.Service
 
             shoppingCart.SubTotal = GetTotal(shoppingCartId);
             var promotionDiscount = RunPromotions(shoppingCartId);
+            _promotionManager.RunPromotions(shoppingCart);
             shoppingCart.Discount = promotionDiscount.Discount;
             var promotionApplied = _promotionRepository.GetByName(promotionDiscount.PromotionName);
             shoppingCart.Promotion = promotionApplied;

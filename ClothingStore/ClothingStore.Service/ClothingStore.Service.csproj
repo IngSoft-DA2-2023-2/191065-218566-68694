@@ -19,6 +19,7 @@
     <ProjectReference Include="..\ClothingStore.DataAccess.Interface\ClothingStore.DataAccess.Interface.csproj" />
     <ProjectReference Include="..\ClothingStore.Models\ClothingStore.Models.csproj" />
     <ProjectReference Include="..\ClothingStore.Service.Interface\ClothingStore.Service.Interface.csproj" />
+    <ProjectReference Include="..\PromotionManager\ClothingStore.PromotionManager.csproj" />
   </ItemGroup>
 
 </Project>

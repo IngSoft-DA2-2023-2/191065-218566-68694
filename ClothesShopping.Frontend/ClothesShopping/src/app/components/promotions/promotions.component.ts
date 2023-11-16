@@ -80,6 +80,14 @@ export class PromotionsComponent implements OnInit {
     this.dialog.open(this.modalFormAddPromotion);
   }
 
+  uploadFile(event: Event) {
+    const element = event.currentTarget as HTMLInputElement;
+    let fileList: FileList | null = element.files;
+    if (fileList) {
+      console.log("FileUpload -> files", fileList);
+    }
+}
+
   public togglePromotionEnablement(promotion: PromotionResponse): void {
     if (promotion.available) {
       this.deactivePromotion(promotion);
