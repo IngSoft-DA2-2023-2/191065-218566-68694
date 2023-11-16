@@ -25,6 +25,7 @@ export class ProductDetailComponent {
   }
 
   public addProductToCart(): void {
+    debugger
     if (this.userToken != null && this.userToken != '') {
       this.getShoppingCartByUserId();
     }

@@ -18,8 +18,27 @@ export class ShoppingCartService extends BaseService<any>{
     return this.http.patch(url, productId);
   }
 
+  removeProductToCart(shoppingCartId: number, productId: number): Observable<any> {
+    const url = `${environment.url}shoppingCarts/remove/${shoppingCartId}`;
+    return this.http.patch(url, productId);
+  }
+
   getShoppingCartByUserId(userId: number): Observable<any> {
     const url = `${environment.url}shoppingCarts/byUserId/${userId}`;
     return this.http.get(url);
+  }
+
+  getDiscount(shoppingCartId: number): Observable<any> {
+    const url = `${environment.url}shoppingCarts/discount/${shoppingCartId}`;
+    return this.http.get(url);
+  }
+  getTotal(shoppingCartId: number): Observable<any> {
+    const url = `${environment.url}shoppingCarts/total/${shoppingCartId}`;
+    return this.http.get(url);
+  }
+
+  makeSale(shoppingCartId: number, paymentId: number): Observable<any> {
+    const url = `${environment.url}shoppingCarts/sales/${shoppingCartId}`;
+    return this.http.patch(url, paymentId);
   }
 }
